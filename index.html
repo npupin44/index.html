@@ -189,6 +189,70 @@
             border-bottom: 1px solid #C5A059;
             border-right: 1px solid #C5A059;
         }
+
+        /* --- CSS ZA ZAKLJUČAVANJE (Lock System) --- */
+        .locked-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+        }
+
+        .locked-overlay.unlocked {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .lock-icon-container {
+            width: 80px; height: 80px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(197, 160, 89, 0.1);
+        }
+
+        .completion-btn-wrapper {
+            margin-top: 3rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 2rem;
+        }
+
+        .btn-complete {
+            background: transparent;
+            border: 1px solid #C5A059;
+            color: #C5A059;
+            padding: 10px 24px;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-complete:hover {
+            background: #C5A059;
+            color: black;
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.4);
+        }
+
+        .btn-complete.finished {
+            border-color: #22c55e;
+            color: #22c55e;
+            pointer-events: none;
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
@@ -266,7 +330,7 @@
                                 </div>
                             </div>
 
-                            <!-- Infografika 1: Centriranje -->
+                            <!-- Infografika 1: Centriranje (IZMENJENO POZICIONIRANJE) -->
                             <div class="infographic-box rounded-lg flex flex-col items-center justify-center p-8 min-h-[300px]">
                                 <span class="absolute top-3 left-3 text-[9px] text-gold uppercase tracking-widest border border-gold px-2 py-0.5">Sistem Odbrane</span>
                                 
@@ -279,8 +343,9 @@
                                             <span class="block text-[8px] uppercase text-white font-bold tracking-widest">Centar</span>
                                         </div>
                                     </div>
-                                    <div class="absolute left-4 text-red-500 text-[10px] font-bold animate-float opacity-70">UVREDA >></div>
-                                    <div class="absolute right-4 text-red-500 text-[10px] font-bold animate-float opacity-70" style="animation-delay: 1s;"><< LASKANJE</div>
+                                    <!-- Pomereni elementi bliže ivicama (left-1/right-1) -->
+                                    <div class="absolute left-1 text-red-500 text-[10px] font-bold animate-float opacity-70">UVREDA >></div>
+                                    <div class="absolute right-1 text-red-500 text-[10px] font-bold animate-float opacity-70" style="animation-delay: 1s;"><< LASKANJE</div>
                                 </div>
                                 <p class="text-[10px] text-gray-500 mt-4 text-center uppercase tracking-widest border-t border-gray-800 pt-2 w-full">Stimulans se razbija o zid fokusa</p>
                             </div>
@@ -864,6 +929,145 @@
             </div>
         </section>
 
+        <!-- LEKCIJA 7 (FINALE) -->
+        <section id="lesson-7" class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1620641788421-7f1c33b74304?q=80&w=2670&auto=format&fit=crop');">
+            <div class="lesson-overlay">
+                <div class="container mx-auto px-4 md:px-6 max-w-5xl">
+                    <article class="luxury-card p-8 md:p-12 reveal rounded-sm border-l-2 border-l-gold">
+                        
+                        <!-- Header -->
+                        <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b border-white/5 pb-6">
+                            <div>
+                                <span class="text-gold font-bold tracking-widest text-xs mb-2 block">PROTOKOL #07</span>
+                                <h2 class="text-3xl md:text-4xl text-white font-heading uppercase tracking-wide gold-glow-text">FINALE — Uzmi ono što ti pripada</h2>
+                                 <p class="text-xs text-gray-400 mt-2 font-mono border-l border-gold pl-2">Ceo Sistem — Centralni Protokol: 30 Alata, 20 min dnevno. + 50 Trikova uticaja + Mini sistem 'Citanja' misli</p>
+                            </div>
+                            <div class="mt-4 md:mt-0 opacity-40">
+                                <i class="fas fa-crown text-white text-5xl"></i>
+                            </div>
+                        </div>
+
+                        <!-- Main Content -->
+                        <div class="grid md:grid-cols-2 gap-12">
+                            <div class="space-y-6 text-gray-300 font-light leading-relaxed text-sm md:text-base">
+                                <p class="font-medium text-white">Ako ti je dosta da manje vredni od tebe bolje prolaze samo zato što su se 'snašli', ova lekcija ti vraća sve propuštene šanse. Ovi alati utiču na celu tvoju realnost — novac, odnose, poštovanje, posao. Gledaj kako sada uzimaš sve što do sada nisi znao da uzmeš.</p>
+                                
+                                <ul class="list-none space-y-3 mt-4">
+                                    <li class="flex items-center gap-3"><i class="fas fa-check text-gold text-xs"></i> Veća plata i bolji autoritet u razgovorima.</li>
+                                    <li class="flex items-center gap-3"><i class="fas fa-check text-gold text-xs"></i> Jači odnosi u porodici i društvu.</li>
+                                    <li class="flex items-center gap-3"><i class="fas fa-check text-gold text-xs"></i> Poštovanje koje ti pripada.</li>
+                                    <li class="flex items-center gap-3"><i class="fas fa-check text-gold text-xs"></i> Jednostavan ritual koji menja percepciju drugih o tebi.</li>
+                                </ul>
+
+                                <!-- VALUE STACK (TEXT ONLY) -->
+                                <div class="mt-8 bg-white/5 border border-gold/30 p-6 rounded-sm relative overflow-hidden shadow-[0_0_30px_rgba(197,160,89,0.05)]">
+                                    <div class="absolute -right-6 -top-6 text-gold/5 text-9xl transform rotate-12"><i class="fas fa-box-open"></i></div>
+                                    <h4 class="text-white font-heading uppercase text-sm mb-4 tracking-widest relative z-10 border-b border-white/10 pb-2">U ovom sistemu dobijaš:</h4>
+                                    <ul class="space-y-3 relative z-10">
+                                        <li class="text-gray-300 text-sm flex items-start gap-3">
+                                            <span class="text-gold text-xs"><i class="fas fa-play"></i></span> 
+                                            <span class="font-bold text-white">Centralni Protokol:</span> 30 ALATA za fokus, kontrolu i jasnu prednost u svakom razgovoru
+                                        </li>
+                                        <li class="text-gray-300 text-sm flex items-start gap-3">
+                                            <span class="text-gold text-xs"><i class="fas fa-play"></i></span> 
+                                            <span class="font-bold text-white">Protokol „Čitanja Ljudi“:</span> prepoznaje motive i namere pre nego što ih drugi pokažu
+                                        </li>
+                                        <li class="text-gray-300 text-sm flex items-start gap-3">
+                                            <span class="text-gold text-xs"><i class="fas fa-play"></i></span> 
+                                            <span class="font-bold text-white">50 Trikova Uticaja:</span> odmah primenljiva moć u svakodnevnim situacijama
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Narrative & CTA Box (CLEAN - NO PRICES) -->
+                            <div class="infographic-box rounded-lg flex flex-col items-center justify-center p-8 relative">
+                                
+                                <div class="text-center w-full mb-6 relative z-10">
+                                    <p class="text-gray-300 text-sm leading-relaxed font-light italic">
+                                        „Stigao si do kraja Lekcije 7 i već sada osećaš razliku.<br>
+                                        Ono što si do sada pokušavao da uzmeš, a nisi znao kako, sada postaje opipljivo i stvarno.<br>
+                                        Ovo što vidiš je samo 1% celog Sistema – ali već taj prvi procenat ti daje jasnu prednost.<br>
+                                        Već sada primećuješ prilike koje ranije nisi video – više novca, bolju kontrolu u odnosima, poštovanje i autoritet.<br>
+                                        Svaki alat i trik u ovom sistemu vodi te ka jasnom rezultatu: da prepoznaš šanse i odmah ih uzmeš.<br>
+                                        Fokus je na tebi i koristi koju odmah možeš da osetiš.<br>
+                                        <strong class="text-white">Sada je trenutak da završiš Protokol i uzmeš ono što ti realno pripada.</strong>“
+                                    </p>
+                                </div>
+                                
+                                <button onclick="openModal()" class="mt-4 bg-gold text-black font-bold uppercase tracking-widest px-8 py-3 rounded-sm hover:bg-white transition-all duration-300 shadow-[0_0_20px_rgba(197,160,89,0.3)] animate-pulse-slow">
+                                    Uzmi ono što ti pripada
+                                </button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODAL KARTICA (CRNI DIZAJN - SVE CENE OVDE) - SMANJENA ZA 20% (scale-[0.8]) -->
+        <div id="paymentModal" class="fixed inset-0 z-[100] hidden">
+            <div class="absolute inset-0 bg-black/95 backdrop-blur-md" onclick="closeModal()"></div>
+            <!-- Dodat scale-[0.8] da se smanji kartica -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6 scale-[0.8]">
+                <div class="bg-black border border-gold/50 p-8 rounded shadow-[0_0_60px_rgba(197,160,89,0.15)] relative">
+                    <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+                    
+                    <h3 class="text-gold font-heading text-xl uppercase mb-6 text-center tracking-widest">Uplata i potvrda — Uzmi ono što ti pripada</h3>
+                    
+                    <div id="modalContent">
+                        <!-- Benefiti Modala (VREDNOST PAKETA) -->
+                        <div class="bg-white/5 p-4 rounded mb-4 text-sm text-gray-300 border border-white/10">
+                            <h4 class="text-white font-bold uppercase text-xs mb-3 border-b border-white/10 pb-2">Vrednost Paketa:</h4>
+                            <ul class="space-y-2 text-xs">
+                                <li class="flex justify-between"><span><i class="fas fa-check text-gold mr-2"></i>Centralni Protokol</span> <span class="text-white font-mono">30 €</span></li>
+                                <li class="flex justify-between"><span><i class="fas fa-check text-gold mr-2"></i>Protokol ‘Čitanja Ljudi’</span> <span class="text-white font-mono">20 €</span></li>
+                                <li class="flex justify-between"><span><i class="fas fa-check text-gold mr-2"></i>50 Trikova Uticaja</span> <span class="text-white font-mono">15 €</span></li>
+                                <li class="flex justify-between border-t border-white/10 pt-2 mt-1 font-bold"><span class="text-gold">UKUPNO VREDNOST:</span> <span class="text-gold font-mono">65 €</span></li>
+                            </ul>
+                        </div>
+
+                        <!-- CENA + TAJMER -->
+                        <div class="text-center py-4 border-y border-gold/20 my-6 bg-gold/5" id="modalPriceContainer">
+                            <!-- JS will populate this -->
+                        </div>
+
+                        <!-- Uputstvo -->
+                        <div class="text-xs text-gray-400 mb-6 space-y-2">
+                            <p class="flex gap-2"><span class="text-gold font-bold">1.</span> <span>Uplati preko Western Uniona direktno <a href="https://www.westernunion.com" target="_blank" class="text-blue-500 font-bold underline hover:text-blue-400 transition-colors">www.westernunion.com</a></span></p>
+                            <p class="pl-5 text-[10px] text-gray-500 italic">Napraviš nalog za manje od minut – izaberi iznos, primaoca i pošalji transakciju.</p>
+                            
+                            <p class="flex gap-2"><span class="text-gold font-bold">2.</span> <span>Primaoc: <span class="text-white font-bold">Nikola Spiridonović, Beograd, Srbija</span></span></p>
+                            <p class="flex gap-2"><span class="text-gold font-bold">3.</span> <span>Svrha uplate: <span class="text-white font-bold">Online Kurs</span></span></p>
+                            
+                            <p class="flex gap-2"><span class="text-gold font-bold">4.</span> <span>Nakon uplate dobijaš broj transakcije (MTCN)</span></p>
+                            <p class="flex gap-2"><span class="text-gold font-bold">5.</span> <span>Unesi svoj email + MTCN u formu ispod:</span></p>
+                        </div>
+
+                        <!-- FORMSPREE INTEGRACIJA -->
+                        <form action="https://formspree.io/f/xovpobqd" method="POST" class="space-y-4">
+                            <div>
+                                <label class="block text-[10px] uppercase text-gray-500 mb-1 tracking-wider">Tvoj Email</label>
+                                <input type="email" name="email" required class="w-full bg-gray-900 border border-gray-700 text-white p-3 text-sm focus:border-gold outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase text-gray-500 mb-1 tracking-wider">Broj transakcije (MTCN)</label>
+                                <input type="text" name="mtcn" required class="w-full bg-gray-900 border border-gray-700 text-white p-3 text-sm focus:border-gold outline-none transition-colors">
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold uppercase py-3 tracking-widest transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] mt-2">
+                                Završi Protokol <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </form>
+
+                        <p class="mt-4 text-center text-gray-500 text-[9px] uppercase tracking-widest opacity-70">
+                            “Ceo Sistem ‘Crna Kutija’ stiže u roku od 24h od potvrde uplate.”
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- FOOTER -->
@@ -912,8 +1116,156 @@
                 element.innerHTML += ' <i class="fas fa-times ml-2"></i>';
             }
         }
+
+        // --- CENA I TAJMER LOGIKA (KOMPLEKSNA) ---
+        
+        // Konstante
+        const PRICE_FULL = 50;
+        const PRICE_PROMO = 44;
+        const PRICE_FLASH = 37;
+        
+        // 1. Decembar
+        const deadlinePromo = new Date('2025-12-01T23:59:59').getTime(); 
+        
+        // Flash tajmer (25 minuta) - čuvamo u localStorage da ne resetuje na refresh
+        let flashEndTime = localStorage.getItem('ascendrixFlashEnd_v5'); // Changed key to reset for new duration
+        if (!flashEndTime) {
+            flashEndTime = new Date().getTime() + (25 * 60 * 1000); // 25 minuta
+            localStorage.setItem('ascendrixFlashEnd_v5', flashEndTime);
+        }
+
+        function updatePricing() {
+            const now = new Date().getTime();
+            const container = document.getElementById('modalPriceContainer');
+            if(!container) return;
+
+            // Logika prioriteta: Flash > Promo > Full
+            
+            // 1. Provera Flash Tajmera (25 min)
+            if (now < flashEndTime) {
+                const distance = flashEndTime - now;
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                container.innerHTML = `
+                    <div class="text-[10px] text-red-500 font-bold uppercase tracking-widest animate-pulse mb-2">Flash Ponuda ističe za: ${minutes}m ${seconds}s</div>
+                    <div class="flex items-center justify-center gap-4">
+                         <div class="flex flex-col">
+                            <span class="text-gray-500 line-through text-xs">Standard: ${PRICE_FULL} €</span>
+                            <span class="text-gray-400 line-through text-xs">Promo: ${PRICE_PROMO} €</span>
+                         </div>
+                         <span class="text-5xl text-gold font-heading font-bold drop-shadow-[0_0_10px_rgba(197,160,89,0.5)]">${PRICE_FLASH} €</span>
+                    </div>
+                `;
+                return;
+            }
+
+            // 2. Provera Promo Tajmera (1. Decembar)
+            if (now < deadlinePromo) {
+                container.innerHTML = `
+                    <div class="text-[10px] text-gold font-bold uppercase tracking-widest mb-2">Promocija do 1. Decembra</div>
+                    <div class="flex items-center justify-center gap-4">
+                         <span class="text-gray-500 line-through text-sm">${PRICE_FULL} €</span>
+                         <span class="text-4xl text-white font-heading font-bold">${PRICE_PROMO} €</span>
+                    </div>
+                `;
+                return;
+            }
+
+            // 3. Standardna cena
+            container.innerHTML = `
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-2">Standardna Cena</div>
+                <div class="text-4xl text-white font-heading font-bold">${PRICE_FULL} €</div>
+            `;
+        }
+
+        // Modal Logic
+        function openModal() {
+            document.getElementById('paymentModal').classList.remove('hidden');
+            updatePricing(); 
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').classList.add('hidden');
+        }
+
+        setInterval(updatePricing, 1000);
+        updatePricing();
+
+        // --- SISTEM ZAKLJUČAVANJA LEKCIJA ---
+        // Dodajemo overlay i dugmiće na postojeće lekcije bez menjanja njihovog HTML koda
+        document.addEventListener('DOMContentLoaded', () => {
+            const lessons = document.querySelectorAll('.lesson-container');
+            
+            lessons.forEach((lesson, index) => {
+                const luxuryCard = lesson.querySelector('.luxury-card');
+                
+                // 1. Dodaj LOCK OVERLAY za sve lekcije osim prve
+                if (index > 0) {
+                    const lockOverlay = document.createElement('div');
+                    lockOverlay.className = 'locked-overlay';
+                    lockOverlay.innerHTML = `
+                        <div class="lock-icon-container">
+                            <i class="fas fa-lock text-gold text-3xl"></i>
+                        </div>
+                        <h3 class="text-white font-heading uppercase text-xl mb-2 tracking-widest">Lekcija Zaključana</h3>
+                        <p class="text-gray-500 text-xs font-mono uppercase">Završite prethodni protokol</p>
+                    `;
+                    lesson.appendChild(lockOverlay);
+                }
+
+                // 2. Dodaj DUGME "ZAVRŠI LEKCIJU" za sve lekcije
+                // Ovo omogućava korisniku da otključa sledeću
+                if (luxuryCard) {
+                    const btnWrapper = document.createElement('div');
+                    btnWrapper.className = 'completion-btn-wrapper';
+                    
+                    const isLast = index === lessons.length - 1;
+                    // Za poslednju lekciju (7) nema sledeće, ali dugme može da stoji kao finalizacija
+                    const btnText = isLast ? "Završi Protokol" : "Označi kao završeno i nastavi";
+                    
+                    btnWrapper.innerHTML = `
+                        <button class="btn-complete" onclick="completeLesson(${index}, this)">
+                            ${btnText} <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    `;
+                    luxuryCard.appendChild(btnWrapper);
+                }
+            });
+        });
+
+        // Globalna funkcija za otključavanje
+        window.completeLesson = function(currentIndex, btnElement) {
+            // Vizuelna promena dugmeta
+            btnElement.classList.add('finished');
+            btnElement.innerHTML = 'PROTOKOL USVOJEN <i class="fas fa-check ml-2"></i>';
+            
+            // Pronađi sledeću lekciju
+            const lessons = document.querySelectorAll('.lesson-container');
+            const nextIndex = currentIndex + 1;
+
+            if (nextIndex < lessons.length) {
+                const nextLesson = lessons[nextIndex];
+                const lockOverlay = nextLesson.querySelector('.locked-overlay');
+                
+                if (lockOverlay) {
+                    // Otključaj
+                    lockOverlay.classList.add('unlocked');
+                    
+                    // Skroluj do sledeće lekcije nakon kratke pauze
+                    setTimeout(() => {
+                        nextLesson.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 500);
+                }
+            } else {
+                // Ako je ovo Lekcija 7 i kliknuto je dugme
+                // Možemo otvoriti modal kao finalni korak
+                if(currentIndex === lessons.length - 1) {
+                    openModal();
+                }
+            }
+        };
     </script>
 </body>
 </html>
-
 
