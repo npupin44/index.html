@@ -94,6 +94,10 @@
             overflow: hidden;
         }
         
+        @media (min-width: 768px) {
+            .system-card { padding: 30px; }
+        }
+        
         .system-card::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
             background: linear-gradient(90deg, transparent, #C5A059, transparent);
@@ -113,6 +117,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding-top: 4rem;
+            padding-bottom: 4rem;
         }
 
         .lesson-overlay {
@@ -129,15 +135,16 @@
             backdrop-filter: blur(15px);
             box-shadow: 0 30px 100px rgba(0,0,0,0.9);
             transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            width: 100%;
             max-width: 1100px;
-            margin: 20px;
+            margin: 0 auto;
         }
 
         /* --- 3. TACTICAL HUD (INFOGRAPHIC) --- */
         .tactical-hud {
             background: radial-gradient(circle at top right, rgba(197, 160, 89, 0.08), transparent 70%), #080808;
             border: 1px solid rgba(197, 160, 89, 0.2);
-            padding: 25px;
+            padding: 20px;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -168,28 +175,34 @@
             border-bottom: 1px solid rgba(255,255,255,0.1);
             padding-bottom: 10px; margin-bottom: 15px;
         }
-        .hud-title { font-family: 'Oswald', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: #C5A059; text-transform: uppercase; }
-        .hud-status { font-size: 0.6rem; color: #555; text-transform: uppercase; letter-spacing: 1px; }
-
+        .hud-title { font-family: 'Oswald', sans-serif; font-size: 0.7rem; md:font-size: 0.8rem; letter-spacing: 2px; color: #C5A059; text-transform: uppercase; }
+        
         /* --- 4. TEXT STYLES --- */
-        .story-text { font-family: 'Montserrat', sans-serif; line-height: 1.8; font-size: 1rem; color: #a0a0a0; }
+        .story-text { font-family: 'Montserrat', sans-serif; line-height: 1.8; font-size: 0.95rem; md:font-size: 1rem; color: #a0a0a0; }
         .story-text p { margin-bottom: 1.5rem; }
         .nlp-bold { color: #F4E0A4; font-weight: 700; border-bottom: 1px dotted #C5A059; cursor: help; }
         
         /* --- 5. BUTTONS --- */
         .btn-gold {
             background: linear-gradient(90deg, #C5A059, #b8860b);
-            color: black; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em;
-            padding: 1.2rem 3rem; position: relative; overflow: hidden;
-            transition: all 0.4s ease; clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            color: black; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em;
+            padding: 1rem 2rem; position: relative; overflow: hidden;
+            transition: all 0.4s ease; clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            font-size: 0.9rem; width: 100%;
+        }
+        @media (min-width: 768px) {
+            .btn-gold { width: auto; font-size: 1rem; padding: 1.2rem 3rem; clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px); }
         }
         .btn-gold:hover { background: #fff; color: #000; box-shadow: 0 0 40px rgba(197, 160, 89, 0.6); }
 
         .btn-mission {
             width: 100%; background: rgba(197, 160, 89, 0.05); border: 1px solid #C5A059;
-            color: #C5A059; padding: 18px; text-transform: uppercase; letter-spacing: 0.15em;
-            font-weight: 600; font-size: 0.8rem; transition: all 0.3s;
-            display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px;
+            color: #C5A059; padding: 15px; text-transform: uppercase; letter-spacing: 0.1em;
+            font-weight: 600; font-size: 0.75rem; transition: all 0.3s;
+            display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 20px;
+        }
+        @media (min-width: 768px) {
+            .btn-mission { padding: 18px; font-size: 0.8rem; letter-spacing: 0.15em; gap: 10px; }
         }
         .btn-mission:hover { background: #C5A059; color: black; box-shadow: 0 0 30px rgba(197, 160, 89, 0.3); }
         .btn-mission.completed { border-color: #22c55e; color: #22c55e; background: rgba(34, 197, 94, 0.05); pointer-events: none; }
@@ -207,31 +220,31 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body id="mainBody" class="overflow-hidden">
+<body id="mainBody" class="overflow-x-hidden">
 
     <!-- 1. SYSTEM INTERRUPTION (MOBILE BROWSER GUIDE) -->
     <div id="browserHint">
         <div class="system-card relative">
             <!-- EXIT BUTTON (X) -->
-            <button onclick="closeBrowserHint()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors z-50">
+            <button onclick="closeBrowserHint()" class="absolute top-2 right-2 md:top-4 md:right-4 text-gray-500 hover:text-white transition-colors z-50 p-2">
                 <i class="fas fa-times text-xl"></i>
             </button>
 
-            <div class="flex justify-center mb-6">
-                <i class="fas fa-mobile-screen-button text-gold text-5xl animate-pulse"></i>
+            <div class="flex justify-center mb-4 md:mb-6">
+                <i class="fas fa-mobile-screen-button text-gold text-4xl md:text-5xl animate-pulse"></i>
             </div>
             
-            <h1 class="font-heading text-xl text-white uppercase tracking-widest mb-4">AKO OTVARAŠ PREKO INSTAGRAMA ILI TIKTOKA</h1>
+            <h1 class="font-heading text-lg md:text-xl text-white uppercase tracking-widest mb-4">AKO KORISTIŠ TIKTOK / INSTAGRAM PREGLEDAČ</h1>
             
             <p class="text-gray-400 font-mono text-xs mb-6 leading-relaxed">
-                Nalaziš se unutar aplikacije. Ovo okruženje te ograničava.
+                Nalaziš se unutar aplikacije? Ovo okruženje blokira punu funkcionalnost Protokola.
                 <br><br>
-                Da bi video sadržaj kako treba, moraš izaći odavde.
+                Da bi pristupio materijalu, moraš izaći iz ove "ljuske".
             </p>
 
             <div class="bg-white/5 p-4 border border-white/10 mb-6 text-left">
                 <div class="text-[10px] text-gold uppercase font-bold mb-3 flex items-center gap-2">
-                    <i class="fas fa-terminal"></i> KAKO DA OTVORIŠ:
+                    <i class="fas fa-terminal"></i> PROTOKOL ZA PREUSMERAVANJE:
                 </div>
                 <ul class="text-xs text-gray-300 space-y-3">
                     <li class="flex items-start gap-3">
@@ -255,8 +268,8 @@
     <nav class="fixed w-full z-40 top-0 bg-black/95 border-b border-white/5 backdrop-blur-md">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex flex-col">
-                <span class="font-brand text-xl text-white tracking-[0.2em] shadow-gold">ASCENDRIX</span>
-                <span class="text-[9px] uppercase tracking-[0.3em] text-gold">Level: 1/6</span>
+                <span class="font-brand text-lg md:text-xl text-white tracking-[0.2em] shadow-gold">ASCENDRIX</span>
+                <span class="text-[8px] md:text-[9px] uppercase tracking-[0.3em] text-gold">Level: 1/6</span>
             </div>
             
             <div class="hidden md:flex flex-col items-end opacity-0 transition-opacity duration-1000" id="navTimerBox">
@@ -273,35 +286,32 @@
         <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-30 filter grayscale contrast-125"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
         
-        <div class="relative z-10 container mx-auto px-6 text-center max-w-5xl pt-20">
+        <div class="relative z-10 container mx-auto px-4 md:px-6 text-center max-w-5xl pt-20">
             <div class="reveal">
-                <div class="flex justify-center mb-8">
-                    <div class="border border-gold/30 bg-gold/5 px-6 py-2 rounded-full text-[10px] text-gold uppercase tracking-[0.4em] flex items-center gap-2 backdrop-blur-sm">
+                <div class="flex justify-center mb-6 md:mb-8">
+                    <div class="border border-gold/30 bg-gold/5 px-4 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] text-gold uppercase tracking-[0.3em] md:tracking-[0.4em] flex items-center gap-2 backdrop-blur-sm">
                         <span class="w-2 h-2 bg-gold rounded-full animate-pulse"></span> Poverljivo
                     </div>
                 </div>
                 
-                <h1 class="font-heading text-6xl md:text-9xl font-bold text-white uppercase leading-none mb-8 drop-shadow-2xl">
-                    PROBUDI SE <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">IZ SNA</span>
+                <h1 class="font-heading text-4xl sm:text-5xl md:text-8xl font-bold text-white uppercase leading-tight md:leading-none mb-6 md:mb-8 drop-shadow-2xl">
+                    PROGRAMIRAN <br>ZA <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">PORAZ?</span>
                 </h1>
                 
-                <div class="w-full max-w-lg mx-auto mb-10 relative group">
+                <div class="w-full max-w-xs md:max-w-lg mx-auto mb-8 md:mb-10 relative group">
                     <div class="absolute -inset-1 bg-gradient-to-r from-gold to-yellow-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                    <!-- KEEPING CHESS KING AS REQUESTED -->
                     <img src="https://images.unsplash.com/photo-1586165368502-1bad197a6461?q=80&w=2658&auto=format&fit=crop" alt="Chess King" class="relative w-full rounded-lg shadow-2xl border border-white/10 mix-blend-screen opacity-90">
                 </div>
 
-                <p class="font-sans text-gray-300 text-sm md:text-lg leading-relaxed mb-12 max-w-2xl mx-auto border-l-2 border-gold/50 pl-6 text-left">
-                    Najveća bol koju osećaš nije neuspeh. To je osećaj da si <strong class="text-white">nebitan</strong>.
-                    Da si samo statista u tuđoj predstavi. Gledaš kako ljudi koji nisu pametniji od tebe dobijaju poštovanje, novac i pažnju koja pripada tebi.
+                <p class="font-sans text-gray-300 text-sm md:text-lg leading-relaxed mb-10 md:mb-12 max-w-2xl mx-auto border-l-2 border-gold/50 pl-4 md:pl-6 text-left">
+                    Dok ti čitaš ovo, neko gluplji od tebe upravlja tvojom platom, tvojim vremenom i tvojim odnosima. Samo zato što on zna Kod, a ti ne.
                     <br><br>
-                    Zašto? Zato što oni znaju pravila igre koja tebi niko nije rekao.
-                    Danas prestajemo da se igramo žrtve. Danas otvaramo <strong>"Crnu Kutiju"</strong>.
+                    <strong class="text-white">Ovo nije kurs. Ovo je Deinstalacija tvog starog softvera.</strong>
                 </p>
 
                 <!-- BUTTON TRIGGERS JOURNEY START -->
-                <button onclick="startProtocol()" class="btn-gold animate-float">
-                    ZAPOČNI INICIJACIJU
+                <button onclick="startProtocol()" class="btn-gold animate-float w-full md:w-auto">
+                    POKRENI INICIJACIJU (Bez povratka)
                 </button>
             </div>
         </div>
@@ -315,17 +325,17 @@
         <!-- LEKCIJA 1: OKVIR (Frame) -->
         <section id="lekcija1" class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2671&auto=format&fit=crop');">
             <div class="lesson-overlay"></div>
-            <div class="container mx-auto px-4 relative z-10">
-                <article class="luxury-card p-8 md:p-12 reveal">
-                    <div class="flex justify-between items-start mb-8 border-b border-white/10 pb-6">
+            <div class="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
+                <article class="luxury-card p-6 md:p-12 reveal">
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-6 md:mb-8 border-b border-white/10 pb-6">
                         <div>
-                            <span class="text-gold font-bold tracking-widest text-xs uppercase mb-2 block">FAZA I: USPOSTAVLJANJE</span>
-                            <h2 class="text-4xl md:text-5xl text-white font-heading uppercase">Gospodar Okvira</h2>
+                            <span class="text-gold font-bold tracking-widest text-[10px] md:text-xs uppercase mb-2 block">FAZA I: USPOSTAVLJANJE</span>
+                            <h2 class="text-3xl md:text-5xl text-white font-heading uppercase">Gospodar Okvira</h2>
                         </div>
-                        <i class="fas fa-expand text-5xl text-white/5"></i>
+                        <i class="fas fa-expand text-4xl md:text-5xl text-white/5 mt-4 md:mt-0 absolute top-6 right-6 md:static"></i>
                     </div>
                     
-                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                         <div class="story-text">
                             <p>
                                 Znaš onaj osećaj kada te neko napadne pitanjem, a ti se smanjiš i počneš da se pravdaš? 
@@ -350,15 +360,15 @@
                                 <i class="fas fa-crosshairs text-gold animate-pulse"></i>
                             </div>
                             
-                            <div class="space-y-4 text-sm relative z-10">
-                                <div class="bg-black/80 p-4 border-l-2 border-red-500">
+                            <div class="space-y-4 text-xs md:text-sm relative z-10">
+                                <div class="bg-black/80 p-3 md:p-4 border-l-2 border-red-500">
                                     <div class="text-[9px] text-red-500 uppercase font-bold mb-1 tracking-widest">NAPAD (NJIHOV OKVIR)</div>
                                     <div class="text-gray-400 italic">"Zašto je tvoja usluga ovoliko skupa?"</div>
                                 </div>
                                 
                                 <div class="flex justify-center"><i class="fas fa-arrow-down text-gold"></i></div>
                                 
-                                <div class="bg-black/80 p-4 border-l-2 border-gold shadow-[0_0_20px_rgba(197,160,89,0.1)]">
+                                <div class="bg-black/80 p-3 md:p-4 border-l-2 border-gold shadow-[0_0_20px_rgba(197,160,89,0.1)]">
                                     <div class="text-[9px] text-gold uppercase font-bold mb-1 tracking-widest">KONTROLA (TVOJ OKVIR)</div>
                                     <div class="text-white font-bold">"Zašto ti je cena jedini faktor kada biraš kvalitet?"</div>
                                 </div>
@@ -376,20 +386,20 @@
         <!-- LEKCIJA 2: MIKRO-SANKCIJA (Judge) -->
         <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2574&auto=format&fit=crop');">
             <div class="lesson-overlay"></div>
-            <div class="container mx-auto px-4 relative z-10">
-                <article class="luxury-card p-8 md:p-12 reveal">
+            <div class="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
+                <article class="luxury-card p-6 md:p-12 reveal">
                     <!-- LOCK -->
-                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-4xl mb-4"></i><p class="text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
+                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-3xl md:text-4xl mb-4"></i><p class="text-[10px] md:text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
 
-                    <div class="flex justify-between items-start mb-8 border-b border-white/10 pb-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-6 md:mb-8 border-b border-white/10 pb-6">
                         <div>
-                            <span class="text-gold font-bold tracking-widest text-xs uppercase mb-2 block">FAZA I: USPOSTAVLJANJE</span>
-                            <h2 class="text-4xl md:text-5xl text-white font-heading uppercase">Mikro-Sankcija</h2>
+                            <span class="text-gold font-bold tracking-widest text-[10px] md:text-xs uppercase mb-2 block">FAZA I: USPOSTAVLJANJE</span>
+                            <h2 class="text-3xl md:text-5xl text-white font-heading uppercase">Mikro-Sankcija</h2>
                         </div>
-                        <i class="fas fa-gavel text-5xl text-white/5"></i>
+                        <i class="fas fa-gavel text-4xl md:text-5xl text-white/5 mt-4 md:mt-0 absolute top-6 right-6 md:static"></i>
                     </div>
                     
-                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                         <div class="story-text">
                             <p>
                                 Koliko puta si se nasmejao na glupu šalu samo da ne bi bilo neprijatno? Koliko puta si prećutao nepoštovanje da bi bio "fin"?
@@ -413,7 +423,7 @@
                                 <i class="fas fa-eye text-gold"></i>
                             </div>
                             
-                            <ul class="space-y-3 text-sm text-gray-300 relative z-10">
+                            <ul class="space-y-3 text-xs md:text-sm text-gray-300 relative z-10">
                                 <li class="flex items-center gap-3 bg-black/60 p-3 border border-white/5">
                                     <span class="text-gold font-bold font-mono">01.</span>
                                     <span>Gledaj u oči 3 sekunde (Bez emocije).</span>
@@ -442,19 +452,19 @@
         <!-- LEKCIJA 3: DOUBLE BIND -->
         <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=2670&auto=format&fit=crop');">
             <div class="lesson-overlay"></div>
-            <div class="container mx-auto px-4 relative z-10">
-                <article class="luxury-card p-8 md:p-12 reveal">
-                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-4xl mb-4"></i><p class="text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
+            <div class="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
+                <article class="luxury-card p-6 md:p-12 reveal">
+                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-3xl md:text-4xl mb-4"></i><p class="text-[10px] md:text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
 
-                    <div class="flex justify-between items-start mb-8 border-b border-white/10 pb-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-6 md:mb-8 border-b border-white/10 pb-6">
                         <div>
-                            <span class="text-gold font-bold tracking-widest text-xs uppercase mb-2 block">FAZA II: INCEPCIJA</span>
-                            <h2 class="text-4xl md:text-5xl text-white font-heading uppercase">Iluzija Izbora</h2>
+                            <span class="text-gold font-bold tracking-widest text-[10px] md:text-xs uppercase mb-2 block">FAZA II: INCEPCIJA</span>
+                            <h2 class="text-3xl md:text-5xl text-white font-heading uppercase">Iluzija Izbora</h2>
                         </div>
-                        <i class="fas fa-code-branch text-5xl text-white/5"></i>
+                        <i class="fas fa-code-branch text-4xl md:text-5xl text-white/5 mt-4 md:mt-0 absolute top-6 right-6 md:static"></i>
                     </div>
                     
-                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                         <div class="story-text">
                             <p>
                                 Mrziš onaj osećaj kad nekoga pitaš nešto, a plašiš se da će reći "Ne"? "Hoćemo li da se vidimo?", "Možeš li da uradiš ovo?".
@@ -465,7 +475,7 @@
                                 Koristi "Dvostruki Čvor". Ponudi dva izbora, a oba vode tamo gde ti želiš.
                                 Ljudski mozak se fokusira na *odabir* (Utorak ili Četvrtak?) i zaboravlja da odbije samu ideju.
                             </p>
-                            <p class="border-l-4 border-gold pl-4 text-white font-bold">
+                            <p class="border-l-4 border-gold pl-4 text-white font-bold text-sm md:text-base">
                                 "Ne pitaj da li ćemo potpisati. Pitaj KAKO."
                             </p>
                         </div>
@@ -481,14 +491,14 @@
                             </div>
                             
                             <div class="flex gap-4 text-center mt-2 relative z-10">
-                                <div class="flex-1 bg-black/60 p-4 opacity-50 border border-red-900">
-                                    <div class="text-[9px] text-red-500 line-through mb-1 tracking-widest">RIZIČNO</div>
-                                    <div class="text-xs text-gray-400">"Hoćeš da se vidimo?"</div>
+                                <div class="flex-1 bg-black/60 p-3 md:p-4 opacity-50 border border-red-900">
+                                    <div class="text-[8px] md:text-[9px] text-red-500 line-through mb-1 tracking-widest">RIZIČNO</div>
+                                    <div class="text-[10px] md:text-xs text-gray-400">"Hoćeš da se vidimo?"</div>
                                     <div class="text-[8px] text-red-800 mt-2">Moguće "NE"</div>
                                 </div>
-                                <div class="flex-1 bg-gold/10 p-4 border border-gold shadow-[0_0_20px_rgba(197,160,89,0.2)]">
-                                    <div class="text-[9px] text-gold font-bold mb-1 tracking-widest">KONTROLA</div>
-                                    <div class="text-xs text-white">"Utorak ili četvrtak?"</div>
+                                <div class="flex-1 bg-gold/10 p-3 md:p-4 border border-gold shadow-[0_0_20px_rgba(197,160,89,0.2)]">
+                                    <div class="text-[8px] md:text-[9px] text-gold font-bold mb-1 tracking-widest">KONTROLA</div>
+                                    <div class="text-[10px] md:text-xs text-white">"Utorak ili četvrtak?"</div>
                                     <div class="text-[8px] text-gold mt-2">Oba su "DA"</div>
                                 </div>
                             </div>
@@ -505,19 +515,19 @@
         <!-- LEKCIJA 4: SIDRENJE IDENTITETA -->
         <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2670&auto=format&fit=crop');">
             <div class="lesson-overlay"></div>
-            <div class="container mx-auto px-4 relative z-10">
-                <article class="luxury-card p-8 md:p-12 reveal">
-                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-4xl mb-4"></i><p class="text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
+            <div class="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
+                <article class="luxury-card p-6 md:p-12 reveal">
+                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-3xl md:text-4xl mb-4"></i><p class="text-[10px] md:text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
 
-                    <div class="flex justify-between items-start mb-8 border-b border-white/10 pb-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-6 md:mb-8 border-b border-white/10 pb-6">
                         <div>
-                            <span class="text-gold font-bold tracking-widest text-xs uppercase mb-2 block">FAZA II: INCEPCIJA</span>
-                            <h2 class="text-4xl md:text-5xl text-white font-heading uppercase">Sidrenje Ega</h2>
+                            <span class="text-gold font-bold tracking-widest text-[10px] md:text-xs uppercase mb-2 block">FAZA II: INCEPCIJA</span>
+                            <h2 class="text-3xl md:text-5xl text-white font-heading uppercase">Sidrenje Ega</h2>
                         </div>
-                        <i class="fas fa-anchor text-5xl text-white/5"></i>
+                        <i class="fas fa-anchor text-4xl md:text-5xl text-white/5 mt-4 md:mt-0 absolute top-6 right-6 md:static"></i>
                     </div>
                     
-                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                         <div class="story-text">
                             <p>
                                 Najgori osećaj je kad moraš nekoga da moliš za uslugu. Osećaš se malo, zavisno. Kao teret.
@@ -541,12 +551,12 @@
                                 <i class="fas fa-fingerprint text-gold"></i>
                             </div>
                             
-                            <div class="bg-black/60 p-6 border border-gold/30 italic text-gold text-sm text-center relative z-10">
+                            <div class="bg-black/60 p-4 md:p-6 border border-gold/30 italic text-gold text-xs md:text-sm text-center relative z-10">
                                 <i class="fas fa-quote-left text-white/20 absolute top-2 left-2"></i>
                                 "Ti si čovek od reči, znam da kod tebe nema vrdanja, zato očekujem da ovo rešimo brzo..."
                                 <i class="fas fa-quote-right text-white/20 absolute bottom-2 right-2"></i>
                             </div>
-                            <div class="text-center mt-3 text-[9px] text-gray-500 uppercase tracking-widest">Rezultat: Obaveza prema samom sebi</div>
+                            <div class="text-center mt-3 text-[8px] md:text-[9px] text-gray-500 uppercase tracking-widest">Rezultat: Obaveza prema samom sebi</div>
 
                             <button class="btn-mission" onclick="completeLesson(3, this)">
                                 VEZUJEM IH ZA EGO <i class="fas fa-link"></i>
@@ -562,19 +572,19 @@
         <!-- LEKCIJA 5: SIVA STENA -->
         <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1485965120184-e224f7a1592e?q=80&w=2669&auto=format&fit=crop');">
             <div class="lesson-overlay"></div>
-            <div class="container mx-auto px-4 relative z-10">
-                <article class="luxury-card p-8 md:p-12 reveal">
-                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-4xl mb-4"></i><p class="text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
+            <div class="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
+                <article class="luxury-card p-6 md:p-12 reveal">
+                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-3xl md:text-4xl mb-4"></i><p class="text-[10px] md:text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
 
-                    <div class="flex justify-between items-start mb-8 border-b border-white/10 pb-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-6 md:mb-8 border-b border-white/10 pb-6">
                         <div>
-                            <span class="text-gold font-bold tracking-widest text-xs uppercase mb-2 block">FAZA III: NEPROBOJNOST</span>
-                            <h2 class="text-4xl md:text-5xl text-white font-heading uppercase">Siva Stena</h2>
+                            <span class="text-gold font-bold tracking-widest text-[10px] md:text-xs uppercase mb-2 block">FAZA III: NEPROBOJNOST</span>
+                            <h2 class="text-3xl md:text-5xl text-white font-heading uppercase">Siva Stena</h2>
                         </div>
-                        <i class="fas fa-cube text-5xl text-white/5"></i>
+                        <i class="fas fa-cube text-4xl md:text-5xl text-white/5 mt-4 md:mt-0 absolute top-6 right-6 md:static"></i>
                     </div>
                     
-                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                         <div class="story-text">
                             <p>
                                 Iscrpljen si od drama? Od ljudi koji ti sisaju energiju, koji te provociraju, koji traže tvoju reakciju?
@@ -597,14 +607,14 @@
                                 <i class="fas fa-shield-alt text-gold"></i>
                             </div>
                             
-                            <div class="space-y-3 text-sm relative z-10">
+                            <div class="space-y-3 text-xs md:text-sm relative z-10">
                                 <div class="flex justify-between border-b border-white/5 pb-3">
                                     <span class="text-red-500 font-bold">"Nemoguć si i arogantan!"</span>
-                                    <span class="text-[9px] text-gray-600 uppercase tracking-widest">[NAPAD]</span>
+                                    <span class="text-[8px] md:text-[9px] text-gray-600 uppercase tracking-widest">[NAPAD]</span>
                                 </div>
                                 <div class="flex justify-between pt-1">
                                     <span class="text-white">"Moguće je da tako deluje ponekad."</span>
-                                    <span class="text-[9px] text-gold uppercase tracking-widest">[STENA]</span>
+                                    <span class="text-[8px] md:text-[9px] text-gold uppercase tracking-widest">[STENA]</span>
                                 </div>
                             </div>
 
@@ -620,19 +630,19 @@
         <!-- LEKCIJA 6: SKALPEL -->
         <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop');">
             <div class="lesson-overlay"></div>
-            <div class="container mx-auto px-4 relative z-10">
-                <article class="luxury-card p-8 md:p-12 reveal">
-                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-4xl mb-4"></i><p class="text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
+            <div class="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl">
+                <article class="luxury-card p-6 md:p-12 reveal">
+                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-3xl md:text-4xl mb-4"></i><p class="text-[10px] md:text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
 
-                    <div class="flex justify-between items-start mb-8 border-b border-white/10 pb-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-6 md:mb-8 border-b border-white/10 pb-6">
                         <div>
-                            <span class="text-gold font-bold tracking-widest text-xs uppercase mb-2 block">FAZA III: NEPROBOJNOST</span>
+                            <span class="text-gold font-bold tracking-widest text-[10px] md:text-xs uppercase mb-2 block">FAZA III: NEPROBOJNOST</span>
                             <h2 class="text-4xl md:text-5xl text-white font-heading uppercase">Skalpel (Meta-Seciranje)</h2>
                         </div>
-                        <i class="fas fa-microscope text-5xl text-white/5"></i>
+                        <i class="fas fa-microscope text-4xl md:text-5xl text-white/5 mt-4 md:mt-0 absolute top-6 right-6 md:static"></i>
                     </div>
                     
-                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                         <div class="story-text">
                             <p>
                                 Najgori osećaj je kad znaš da si u pravu, a oni te ubede da si lud (Prave te ludim). Vrtiš se u krug, gubiš tlo pod nogama.
@@ -655,7 +665,7 @@
                                 <i class="fas fa-search text-gold"></i>
                             </div>
                             
-                            <div class="bg-black/60 p-4 border border-white/10 text-gray-300 text-sm italic relative z-10">
+                            <div class="bg-black/60 p-4 border border-white/10 text-gray-300 text-xs md:text-sm italic relative z-10">
                                 <i class="fas fa-bolt text-gold mr-2"></i>
                                 "Zanimljivo je kako se ovde pokušava izazvati krivica umesto da se rešava problem."
                             </div>
@@ -669,8 +679,111 @@
             </div>
         </section>
 
+        <!-- === ABOUT & SOCIAL PROOF === -->
+        <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1499750310159-52f0f8371f78?q=80&w=2667&auto=format&fit=crop');">
+            <div class="lesson-overlay"></div>
+            <div class="container mx-auto px-4 md:px-6 relative z-10 max-w-6xl py-20">
+                
+                <!-- O MENI (THE ARCHITECT) - NO IMAGE, JUST ICON -->
+                <article class="luxury-card p-8 md:p-12 mb-16 reveal border-l-0 border-t-2 border-t-gold">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="flex flex-col items-center justify-center">
+                            <div class="w-32 h-32 rounded-full border-2 border-gold flex items-center justify-center bg-black/50 shadow-[0_0_30px_rgba(197,160,89,0.2)] mb-6">
+                                <i class="fas fa-chess-king text-5xl text-gold"></i>
+                            </div>
+                            <div class="text-center">
+                                <span class="text-[10px] text-gold uppercase tracking-widest block mb-1">DOSIJE:</span>
+                                <span class="text-white font-heading uppercase text-xl tracking-wider">Nikola Spiridonović</span>
+                            </div>
+                        </div>
+                        
+                        <div class="story-text">
+                            <h3 class="text-gold font-heading text-2xl uppercase mb-6 tracking-widest">Nisam rođen kao "Igrač"</h3>
+                            <p class="mb-4">
+                                Do svoje 30. godine bio sam isti kao i svi. Poštovao sam pravila. Radio sam prekovremeno. Klimao sam glavom šefovima koji nisu znali šta rade.
+                            </p>
+                            <p class="mb-4">
+                                Mislio sam: <em>"Ako budem dobar i vredan, neko će to primetiti."</em>
+                                <br><span class="text-white font-bold">Niko nije primetio.</span> Naprotiv. Gazili su me jer sam bio "siguran".
+                            </p>
+                            <p class="mb-6">
+                                Onda sam shvatio brutalnu istinu: <strong>Svet ne nagrađuje one koji poštuju pravila, već one koji ih prave.</strong>
+                                Proveo sam poslednjih 5 godina dekonstruišući psihologiju moći, pregovora i dominacije. "Crna Kutija" nije teorija iz knjiga. To su ožiljci pretvoreni u sistem.
+                            </p>
+                            <div class="bg-white/5 p-4 border-l-2 border-gold italic text-sm text-gray-300">
+                                "Ne nudim ti motivaciju. Nudim ti ključeve od lisica koje ni ne znaš da nosiš."
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- SOCIAL PROOF (THE BROTHERHOOD) - INITIALS ONLY -->
+                <div class="text-center mb-12 reveal">
+                    <h2 class="text-3xl md:text-4xl text-white font-heading uppercase mb-2">Izveštaji sa Terena</h2>
+                    <div class="w-24 h-1 bg-gold mx-auto"></div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 reveal">
+                    
+                    <!-- Card 1 -->
+                    <div class="bg-black/80 border border-white/10 p-6 relative group hover:border-gold/50 transition-colors">
+                        <i class="fas fa-quote-left text-gold text-2xl mb-4 opacity-50"></i>
+                        <p class="text-xs md:text-sm text-gray-400 mb-6 leading-relaxed">
+                            "Najjeziviji trenutak je bio na sastanku. Šef je krenuo da viče, a ja sam primenio tehniku iz prvog modula. Ućutao je za 5 sekundi. Prvi put u 10 godina sam osetio da ja kontrolišem sobu."
+                        </p>
+                        <div class="flex items-center gap-3 border-t border-white/5 pt-4">
+                            <div class="w-10 h-10 bg-gray-900 border border-gold/30 rounded-full flex items-center justify-center text-gold font-heading font-bold text-sm">M.P.</div>
+                            <div>
+                                <div class="text-white text-xs font-bold uppercase">Marko (34)</div>
+                                <div class="text-[9px] text-gray-500">Menadžer Prodaje, Beograd</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-black/80 border border-white/10 p-6 relative group hover:border-gold/50 transition-colors">
+                        <i class="fas fa-quote-left text-gold text-2xl mb-4 opacity-50"></i>
+                        <p class="text-xs md:text-sm text-gray-400 mb-6 leading-relaxed">
+                            "Mislio sam da je ovo manipulacija, ali je zapravo samoodbrana. Ovaj sistem mi je spasio živce. Ljudi više ne mogu da me uvuku u besmislene svađe. Mir koji sada imam nema cenu."
+                        </p>
+                        <div class="flex items-center gap-3 border-t border-white/5 pt-4">
+                            <div class="w-10 h-10 bg-gray-900 border border-gold/30 rounded-full flex items-center justify-center text-gold font-heading font-bold text-sm">S.J.</div>
+                            <div>
+                                <div class="text-white text-xs font-bold uppercase">Stefan (41)</div>
+                                <div class="text-[9px] text-gray-500">Preduzetnik, Novi Sad</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="bg-black/80 border border-white/10 p-6 relative group hover:border-gold/50 transition-colors">
+                        <i class="fas fa-quote-left text-gold text-2xl mb-4 opacity-50"></i>
+                        <p class="text-xs md:text-sm text-gray-400 mb-6 leading-relaxed">
+                            "Nisam verovao u ovo dok nisam probao. Iskoristio sam principe u pregovorima. Druga strana je mislila da oni biraju, a zapravo su išli tačno tamo gde sam ja hteo. Zatvorio sam posao za 15 minuta."
+                        </p>
+                        <div class="flex items-center gap-3 border-t border-white/5 pt-4">
+                            <div class="w-10 h-10 bg-gray-900 border border-gold/30 rounded-full flex items-center justify-center text-gold font-heading font-bold text-sm">I.K.</div>
+                            <div>
+                                <div class="text-white text-xs font-bold uppercase">Ivan (29)</div>
+                                <div class="text-[9px] text-gray-500">Freelancer, Niš</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="text-center mt-12">
+                    <p class="text-gray-500 text-xs uppercase tracking-widest mb-4">Pridruži se onima koji su se probudili</p>
+                    <button onclick="document.getElementById('finalOffer').scrollIntoView({behavior: 'smooth'})" class="text-gold border-b border-gold hover:text-white hover:border-white transition-all text-sm uppercase tracking-widest pb-1">
+                        Vrati me na Finalnu Ponudu
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
         <!-- === FINAL CTA: THE BLACK BOX === -->
-        <section id="finalOffer" class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2670&auto=format&fit=crop');">
+        <section id="finalOffer" class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');">
             <div class="lesson-overlay"></div>
             <div class="container mx-auto px-4 md:px-6 max-w-4xl relative z-10">
                 <article class="luxury-card p-1 reveal border-gold shadow-[0_0_150px_rgba(197,160,89,0.15)]">
@@ -683,10 +796,12 @@
                     </div>
 
                     <div class="bg-black/95 p-8 md:p-12 text-center md:text-left">
-                        <div class="flex flex-col md:flex-row justify-between items-start mb-10 border-b border-white/10 pb-8">
-                            <div>
+                        <div class="flex flex-col md:flex-row justify-between items-center md:items-start mb-10 border-b border-white/10 pb-8"> <!-- Changed items-start to items-center md:items-start -->
+                            <div class="w-full md:w-auto"> <!-- Added w-full to ensure centering works if flex-col -->
                                 <span class="text-red-500 font-bold tracking-[0.3em] text-[10px] mb-3 block animate-pulse">TAJNI KANAL OTVOREN</span>
-                                <h2 class="text-5xl md:text-7xl text-white font-heading uppercase leading-none">Arhitektura <br><span class="text-gold">Senke</span></h2>
+                                <h2 class="text-4xl sm:text-5xl md:text-7xl text-white font-heading uppercase leading-none break-words"> <!-- Adjusted sizes and added break-words -->
+                                    Arhitektura <br><span class="text-gold">Senke</span>
+                                </h2>
                             </div>
                             <div class="mt-6 md:mt-0 text-right hidden md:block">
                                 <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Validnost Ponude</div>
@@ -750,56 +865,59 @@
         <div id="paymentModal" class="fixed inset-0 z-[100] hidden">
             <div class="absolute inset-0 bg-black/98 backdrop-blur-xl" onclick="closePaymentModal()"></div>
             
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6">
-                <div class="bg-[#0f0f0f] border border-gold/30 p-10 rounded-sm shadow-[0_0_100px_rgba(197,160,89,0.2)] relative">
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-sm p-4 scale-75 origin-center">
+                <div class="bg-[#0f0f0f] border border-gold/30 p-6 md:p-8 rounded-sm shadow-[0_0_100px_rgba(197,160,89,0.2)] relative">
                     <button onclick="closePaymentModal()" class="absolute top-4 right-4 text-gray-600 hover:text-white"><i class="fas fa-times"></i></button>
                     
-                    <div class="text-center mb-8">
-                        <i class="fas fa-user-secret text-5xl text-gold mb-4 opacity-80"></i>
-                        <h3 class="text-white font-heading text-2xl uppercase tracking-widest">Anonimni Kanal</h3>
-                        <p class="text-gray-500 text-xs mt-2 font-mono">ENCRYPTED TRANSACTION: NO DIGITAL TRACE</p>
+                    <div class="text-center mb-6">
+                        <i class="fas fa-user-secret text-4xl text-gold mb-3 opacity-80"></i>
+                        <h3 class="text-white font-heading text-xl uppercase tracking-widest">Anonimni Kanal</h3>
+                        <p class="text-gray-500 text-xs mt-1 font-mono">ENCRYPTED TRANSACTION: NO DIGITAL TRACE</p>
                     </div>
 
-                    <div class="space-y-6 mb-8">
-                        <div class="bg-black p-5 border-l-2 border-gold flex flex-col gap-4">
-                            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                    <div class="space-y-4 mb-6">
+                        <div class="bg-black p-4 border-l-2 border-gold flex flex-col gap-3">
+                            <div class="flex justify-between items-center border-b border-white/10 pb-2">
                                 <div>
                                     <p class="text-[10px] text-gray-400 uppercase tracking-widest">Metod:</p>
-                                    <a href="https://www.westernunion.com/rs/sr/home.html" target="_blank" class="text-gold font-bold tracking-wider underline hover:text-white text-sm">WESTERN UNION SRBIJA <i class="fas fa-external-link-alt ml-1"></i></a>
+                                    <a href="https://www.westernunion.com/rs/sr/home.html" target="_blank" class="text-blue-500 font-bold tracking-wider underline hover:text-blue-400 text-xs md:text-sm">WESTERN UNION SRBIJA <i class="fas fa-external-link-alt ml-1"></i></a>
+                                    <p class="text-[9px] text-gray-500 italic mt-1">
+                                        <i class="fas fa-info-circle text-gold mr-1"></i> Registruj se za manje od minut i pošalji novac online.
+                                    </p>
                                 </div>
                                 <div class="text-right">
                                     <p class="text-[10px] text-gray-400 uppercase tracking-widest">Iznos:</p>
-                                    <p class="text-gold font-bold text-xl">37 EUR</p>
+                                    <p class="text-gold font-bold text-lg">37 EUR</p>
                                 </div>
                             </div>
                             <p class="text-[10px] text-gray-500 italic">
-                                Klikni na link iznad za online slanje ili poseti najbližu poštu/menjačnicu.
+                                Alternativa: Poseti najbližu poštu ili menjačnicu.
                             </p>
                         </div>
                         
-                        <div class="text-sm text-gray-400 space-y-3 pl-4 border-l border-white/10 font-mono">
+                        <div class="text-xs text-gray-400 space-y-2 pl-4 border-l border-white/10 font-mono">
                             <p>1. Primalac: <strong class="text-white">Nikola Spiridonović</strong></p>
                             <p>2. Lokacija: <strong class="text-white">Beograd, Srbija</strong></p>
-                            <p>3. Svrha: <strong class="text-gray-500">Donacija / Pomoć</strong></p>
+                            <p>3. Svrha: <strong class="text-gray-500">Online kurs</strong></p>
                         </div>
                     </div>
 
-                    <form action="https://formspree.io/f/xovpobqd" method="POST" class="space-y-5">
+                    <form action="https://formspree.io/f/xovpobqd" method="POST" class="space-y-4">
                         <input type="hidden" name="subject" value="NOVA UPLATA - CRNA KUTIJA">
                         <div>
-                            <label class="block text-[10px] uppercase text-gold mb-2 tracking-widest font-bold">Verifikacioni Kod (MTCN)</label>
-                            <input type="text" name="mtcn" required placeholder="Unesi 10 cifara..." class="w-full bg-black border border-gray-800 text-white p-4 text-sm focus:border-gold outline-none transition-colors">
+                            <label class="block text-[10px] uppercase text-gold mb-1 tracking-widest font-bold">Verifikacioni Kod (MTCN)</label>
+                            <input type="text" name="mtcn" required placeholder="Unesi 10 cifara..." class="w-full bg-black border border-gray-800 text-white p-3 text-sm focus:border-gold outline-none transition-colors">
                         </div>
                         <div>
-                            <label class="block text-[10px] uppercase text-gold mb-2 tracking-widest font-bold">Email za Prijem Materijala</label>
-                            <input type="email" name="email" required placeholder="tvoj@email.com" class="w-full bg-black border border-gray-800 text-white p-4 text-sm focus:border-gold outline-none transition-colors">
+                            <label class="block text-[10px] uppercase text-gold mb-1 tracking-widest font-bold">Email za Prijem Materijala</label>
+                            <input type="email" name="email" required placeholder="tvoj@email.com" class="w-full bg-black border border-gray-800 text-white p-3 text-sm focus:border-gold outline-none transition-colors">
                         </div>
-                        <button type="submit" class="w-full bg-green-800 hover:bg-green-700 text-white font-bold uppercase py-4 tracking-widest transition-all shadow-[0_0_30px_rgba(34,197,94,0.2)] mt-2">
+                        <button type="submit" class="w-full bg-green-800 hover:bg-green-700 text-white font-bold uppercase py-3 tracking-widest transition-all shadow-[0_0_30px_rgba(34,197,94,0.2)] mt-2 text-sm">
                             POTVRDI I PREUZMI <i class="fas fa-download ml-2"></i>
                         </button>
                     </form>
                     
-                    <p class="text-center text-[9px] text-gray-600 mt-6 uppercase tracking-widest">
+                    <p class="text-center text-[8px] text-gray-600 mt-4 uppercase tracking-widest">
                         Pristup se odobrava manuelno nakon provere (Max 12h).
                     </p>
                 </div>
