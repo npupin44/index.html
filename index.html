@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASCENDRIX | CRNA KUTIJA MASTER</title>
+    <title>ASCENDRIX | PROTOKOL CRNA KUTIJA</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,10 +11,10 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:wght@300;400;500;600&family=Oswald:wght@300;400;500;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:wght@300;400;500;600;700&family=Oswald:wght@300;400;500;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Konfiguracija boja -->
+    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
@@ -25,12 +25,12 @@
                             dim: 'rgba(197, 160, 89, 0.1)',
                             text: '#E5C585',
                             bright: '#F4E0A4',
-                            glow: 'rgba(197, 160, 89, 0.5)'
+                            glow: 'rgba(197, 160, 89, 0.6)'
                         },
                         black: {
                             DEFAULT: '#050505',
                             card: '#0a0a0a',
-                            overlay: 'rgba(0, 0, 0, 0.85)'
+                            overlay: 'rgba(0, 0, 0, 0.92)'
                         }
                     },
                     fontFamily: {
@@ -39,13 +39,19 @@
                         brand: ['Cinzel', 'serif'],
                     },
                     animation: {
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                        'scan': 'scan 3s linear infinite',
+                        'glitch': 'glitch 2s linear infinite',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-10px)' },
+                        },
+                        scan: {
+                            '0%': { backgroundPosition: '0% 0%' },
+                            '100%': { backgroundPosition: '100% 100%' },
                         }
                     }
                 }
@@ -61,1028 +67,773 @@
             letter-spacing: 0.03em;
         }
 
-        /* CARD STYLES */
+        /* --- 1. SYSTEM INTERRUPTION (BROWSER GATE) --- */
+        #browserHint {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .system-card {
+            background: #0a0a0a;
+            border: 1px solid #C5A059;
+            box-shadow: 0 0 50px rgba(197, 160, 89, 0.2);
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .system-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, #C5A059, transparent);
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        /* --- 2. CARDS & SECTIONS --- */
         .lesson-container {
             position: relative;
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            border-top: 1px solid rgba(197, 160, 89, 0.1);
-            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .lesson-overlay {
-            background: linear-gradient(to bottom, #050505 0%, rgba(5,5,5,0.9) 20%, rgba(5,5,5,0.95) 80%, #050505 100%);
-            padding: 5rem 0;
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, #050505 0%, rgba(5,5,5,0.7) 50%, #050505 100%);
+            z-index: 1;
         }
 
         .luxury-card {
-            background: rgba(12, 12, 12, 0.7);
-            border: 1px solid rgba(255,255,255,0.03);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+            position: relative; z-index: 10;
+            background: rgba(12, 12, 12, 0.85);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-left: 3px solid #C5A059;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 30px 100px rgba(0,0,0,0.9);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            max-width: 1100px;
+            margin: 20px;
         }
 
-        .luxury-card:hover {
-            border-color: #C5A059;
-            box-shadow: 0 0 60px rgba(197, 160, 89, 0.15);
-            transform: translateY(-2px);
-        }
-
-        /* INFOGRAPHICS & ANIMATIONS */
-        .infographic-box {
-            background: radial-gradient(circle at center, rgba(20,20,20,0.8), rgba(0,0,0,0.9));
-            border: 1px solid rgba(197,160,89,0.2);
+        /* --- 3. TACTICAL HUD (INFOGRAPHIC) --- */
+        .tactical-hud {
+            background: radial-gradient(circle at top right, rgba(197, 160, 89, 0.08), transparent 70%), #080808;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            padding: 25px;
             position: relative;
             overflow: hidden;
-        }
-
-        .breath-circle {
-            animation: breathe 8s infinite ease-in-out;
-            box-shadow: 0 0 25px rgba(197, 160, 89, 0.2);
-        }
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); opacity: 0.6; border-color: #444; } 
-            40% { transform: scale(1.4); opacity: 1; border-color: #C5A059; box-shadow: 0 0 40px rgba(197, 160, 89, 0.5); } 
-            50% { transform: scale(1.4); }
-        }
-
-        .shield-pulse {
-            animation: shieldPulse 2.5s infinite;
-        }
-        @keyframes shieldPulse {
-            0% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.4); }
-            70% { box-shadow: 0 0 0 30px rgba(197, 160, 89, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); }
-        }
-
-        /* QUIZ STYLES */
-        .quiz-option {
-            cursor: pointer;
-            padding: 14px 18px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0) 100%);
-            margin-bottom: 10px;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .quiz-option:hover {
-            background: rgba(197, 160, 89, 0.1);
-            border-color: #C5A059;
-            padding-left: 22px;
-        }
-        .quiz-option.correct {
-            background: rgba(34, 197, 94, 0.1);
-            border-color: #22c55e;
-            color: #86efac;
-        }
-        .quiz-option.wrong {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: #ef4444;
-            color: #fca5a5;
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 1s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .gold-glow-text {
-            text-shadow: 0 0 15px rgba(197, 160, 89, 0.4);
-        }
-        
-        .anatomy-box {
-            border-left: 2px solid #C5A059;
-            background: linear-gradient(90deg, rgba(197,160,89,0.05) 0%, transparent 100%);
-            padding: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .mission-box {
-            border: 1px dashed rgba(197, 160, 89, 0.4);
-            background: rgba(0,0,0,0.4);
-            position: relative;
-        }
-        .mission-box::before {
-            content: '';
-            position: absolute;
-            top: -1px; left: -1px;
-            width: 10px; height: 10px;
-            border-top: 1px solid #C5A059;
-            border-left: 1px solid #C5A059;
-        }
-        .mission-box::after {
-            content: '';
-            position: absolute;
-            bottom: -1px; right: -1px;
-            width: 10px; height: 10px;
-            border-bottom: 1px solid #C5A059;
-            border-right: 1px solid #C5A059;
-        }
-
-        /* --- CSS ZA ZAKLJUČAVANJE (Lock System) --- */
-        .locked-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(5, 5, 5, 0.95);
-            backdrop-filter: blur(15px);
-            z-index: 40;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+            justify-content: space-between;
+            height: 100%;
         }
-
-        .locked-overlay.unlocked {
-            opacity: 0;
-            visibility: hidden;
+        
+        .hud-grid {
+            position: absolute; inset: 0;
+            background-image: linear-gradient(rgba(197, 160, 89, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(197, 160, 89, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
             pointer-events: none;
         }
 
-        .lock-icon-container {
-            width: 80px; height: 80px;
-            border: 1px solid rgba(197, 160, 89, 0.3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            box-shadow: 0 0 30px rgba(197, 160, 89, 0.1);
+        .hud-corner {
+            position: absolute; width: 10px; height: 10px;
+            border-color: #C5A059; border-style: solid;
         }
+        .tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
+        .tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
+        .bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
+        .br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
 
-        .completion-btn-wrapper {
-            margin-top: 3rem;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 2rem;
+        .hud-header {
+            display: flex; justify-content: space-between; items-center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px; margin-bottom: 15px;
         }
+        .hud-title { font-family: 'Oswald', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: #C5A059; text-transform: uppercase; }
+        .hud-status { font-size: 0.6rem; color: #555; text-transform: uppercase; letter-spacing: 1px; }
 
-        .btn-complete {
-            background: transparent;
-            border: 1px solid #C5A059;
-            color: #C5A059;
-            padding: 10px 24px;
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.3s;
+        /* --- 4. TEXT STYLES --- */
+        .story-text { font-family: 'Montserrat', sans-serif; line-height: 1.8; font-size: 1rem; color: #a0a0a0; }
+        .story-text p { margin-bottom: 1.5rem; }
+        .nlp-bold { color: #F4E0A4; font-weight: 700; border-bottom: 1px dotted #C5A059; cursor: help; }
+        
+        /* --- 5. BUTTONS --- */
+        .btn-gold {
+            background: linear-gradient(90deg, #C5A059, #b8860b);
+            color: black; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em;
+            padding: 1.2rem 3rem; position: relative; overflow: hidden;
+            transition: all 0.4s ease; clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
         }
+        .btn-gold:hover { background: #fff; color: #000; box-shadow: 0 0 40px rgba(197, 160, 89, 0.6); }
 
-        .btn-complete:hover {
-            background: #C5A059;
-            color: black;
-            box-shadow: 0 0 20px rgba(197, 160, 89, 0.4);
+        .btn-mission {
+            width: 100%; background: rgba(197, 160, 89, 0.05); border: 1px solid #C5A059;
+            color: #C5A059; padding: 18px; text-transform: uppercase; letter-spacing: 0.15em;
+            font-weight: 600; font-size: 0.8rem; transition: all 0.3s;
+            display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px;
         }
+        .btn-mission:hover { background: #C5A059; color: black; box-shadow: 0 0 30px rgba(197, 160, 89, 0.3); }
+        .btn-mission.completed { border-color: #22c55e; color: #22c55e; background: rgba(34, 197, 94, 0.05); pointer-events: none; }
 
-        .btn-complete.finished {
-            border-color: #22c55e;
-            color: #22c55e;
-            pointer-events: none;
-            opacity: 0.7;
+        /* --- 6. LOCK SYSTEM --- */
+        .locked-overlay {
+            position: absolute; inset: 0; background: rgba(5, 5, 5, 0.96);
+            backdrop-filter: blur(25px); z-index: 50;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.8s, visibility 0.8s;
         }
+        .locked-overlay.unlocked { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body>
+<body id="mainBody" class="overflow-hidden">
+
+    <!-- 1. SYSTEM INTERRUPTION (MOBILE BROWSER GUIDE) -->
+    <div id="browserHint">
+        <div class="system-card relative">
+            <!-- EXIT BUTTON (X) -->
+            <button onclick="closeBrowserHint()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors z-50">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+
+            <div class="flex justify-center mb-6">
+                <i class="fas fa-mobile-screen-button text-gold text-5xl animate-pulse"></i>
+            </div>
+            
+            <h1 class="font-heading text-xl text-white uppercase tracking-widest mb-4">AKO OTVARAŠ PREKO INSTAGRAMA ILI TIKTOKA</h1>
+            
+            <p class="text-gray-400 font-mono text-xs mb-6 leading-relaxed">
+                Nalaziš se unutar aplikacije. Ovo okruženje te ograničava.
+                <br><br>
+                Da bi video sadržaj kako treba, moraš izaći odavde.
+            </p>
+
+            <div class="bg-white/5 p-4 border border-white/10 mb-6 text-left">
+                <div class="text-[10px] text-gold uppercase font-bold mb-3 flex items-center gap-2">
+                    <i class="fas fa-terminal"></i> KAKO DA OTVORIŠ:
+                </div>
+                <ul class="text-xs text-gray-300 space-y-3">
+                    <li class="flex items-start gap-3">
+                        <span class="text-gold font-bold">1.</span> 
+                        <span>Pronađi <strong class="text-white">tri tačkice (•••)</strong> ili <strong class="text-white">tri crtice (≡)</strong> u gornjem ili donjem uglu ekrana.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-gold font-bold">2.</span> 
+                        <span>Klikni na njih i izaberi opciju: <br><strong class="text-white border-b border-gold/50 pb-1 mt-1 inline-block">'Open in Browser'</strong> ili <strong>'Otvori u pretraživaču'</strong>.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <button onclick="closeBrowserHint()" class="text-[10px] text-gray-600 uppercase tracking-widest hover:text-white transition-colors border-b border-transparent hover:border-white pb-1">
+                Ako niste u aplikaciji, zanemarite ovo. (Klikni X)
+            </button>
+        </div>
+    </div>
 
     <!-- NAVIGACIJA -->
-    <nav class="fixed w-full z-50 top-0 bg-black/90 border-b border-white/5 backdrop-blur-md">
-        <div class="container mx-auto px-6 py-5 flex justify-between items-center">
+    <nav class="fixed w-full z-40 top-0 bg-black/95 border-b border-white/5 backdrop-blur-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex flex-col">
-                <span class="font-brand text-xl text-white tracking-[0.2em]">ASCENDRIX</span>
-                <span class="text-[8px] uppercase tracking-[0.4em] text-gold">Master Protokol</span>
+                <span class="font-brand text-xl text-white tracking-[0.2em] shadow-gold">ASCENDRIX</span>
+                <span class="text-[9px] uppercase tracking-[0.3em] text-gold">Level: 1/6</span>
             </div>
-            <div class="text-gold text-xs border border-gold px-3 py-1 rounded-sm uppercase tracking-widest hidden md:block opacity-70">
-                Status: Online
+            
+            <div class="hidden md:flex flex-col items-end opacity-0 transition-opacity duration-1000" id="navTimerBox">
+                <div class="text-[9px] text-red-500 uppercase tracking-widest animate-pulse flex items-center gap-2">
+                    <span class="w-1 h-1 bg-red-500 rounded-full"></span> Flash Protokol
+                </div>
+                <div id="headerTimer" class="text-gold font-mono text-xs font-bold">--:--:--</div>
             </div>
         </div>
     </nav>
 
-    <!-- HERO SEKCIJA -->
-    <header class="relative min-h-[65vh] flex items-center justify-center bg-black">
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop')] bg-cover bg-center opacity-30"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+    <!-- HERO SEKCIJA: THE AWAKENING -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-30 filter grayscale contrast-125"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
         
-        <div class="relative z-10 container mx-auto px-6 text-center pt-24">
+        <div class="relative z-10 container mx-auto px-6 text-center max-w-5xl pt-20">
             <div class="reveal">
-                <div class="w-px h-24 bg-gradient-to-b from-transparent via-gold to-transparent mx-auto mb-8"></div>
-                <h1 class="font-heading text-5xl md:text-8xl font-bold text-white uppercase leading-none mb-6 tracking-tight drop-shadow-2xl">
-                    CRNA <span class="text-gold">KUTIJA</span>
+                <div class="flex justify-center mb-8">
+                    <div class="border border-gold/30 bg-gold/5 px-6 py-2 rounded-full text-[10px] text-gold uppercase tracking-[0.4em] flex items-center gap-2 backdrop-blur-sm">
+                        <span class="w-2 h-2 bg-gold rounded-full animate-pulse"></span> Poverljivo
+                    </div>
+                </div>
+                
+                <h1 class="font-heading text-6xl md:text-9xl font-bold text-white uppercase leading-none mb-8 drop-shadow-2xl">
+                    PROBUDI SE <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">IZ SNA</span>
                 </h1>
-                <p class="font-sans text-sm md:text-lg text-gray-400 max-w-2xl mx-auto mb-10 font-light leading-relaxed tracking-wide">
-                    Sistem za potpunu emocionalnu kontrolu, nevidljivi uticaj i neprobojnu odbranu.
-                    <br><span class="text-gold text-xs uppercase tracking-widest mt-4 block border border-gold/30 inline-block px-4 py-1 rounded-full">Verzija: Master</span>
+                
+                <div class="w-full max-w-lg mx-auto mb-10 relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-gold to-yellow-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                    <!-- KEEPING CHESS KING AS REQUESTED -->
+                    <img src="https://images.unsplash.com/photo-1586165368502-1bad197a6461?q=80&w=2658&auto=format&fit=crop" alt="Chess King" class="relative w-full rounded-lg shadow-2xl border border-white/10 mix-blend-screen opacity-90">
+                </div>
+
+                <p class="font-sans text-gray-300 text-sm md:text-lg leading-relaxed mb-12 max-w-2xl mx-auto border-l-2 border-gold/50 pl-6 text-left">
+                    Najveća bol koju osećaš nije neuspeh. To je osećaj da si <strong class="text-white">nebitan</strong>.
+                    Da si samo statista u tuđoj predstavi. Gledaš kako ljudi koji nisu pametniji od tebe dobijaju poštovanje, novac i pažnju koja pripada tebi.
+                    <br><br>
+                    Zašto? Zato što oni znaju pravila igre koja tebi niko nije rekao.
+                    Danas prestajemo da se igramo žrtve. Danas otvaramo <strong>"Crnu Kutiju"</strong>.
                 </p>
+
+                <!-- BUTTON TRIGGERS JOURNEY START -->
+                <button onclick="startProtocol()" class="btn-gold animate-float">
+                    ZAPOČNI INICIJACIJU
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="bg-black relative">
+    <!-- GLAVNI SADRŽAJ - SKRIVEN NA POČETKU -->
+    <main class="bg-black relative hidden" id="mainContent">
         
-        <!-- LEKCIJA 1 -->
-        <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=2670&auto=format&fit=crop');">
-            <div class="lesson-overlay">
-                <div class="container mx-auto px-4 md:px-6 max-w-5xl">
-                    <article class="luxury-card p-8 md:p-12 reveal rounded-sm">
-                        
-                        <!-- Header -->
-                        <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b border-white/5 pb-6">
-                            <div>
-                                <span class="text-gold font-bold tracking-widest text-xs mb-2 block">PROTOKOL #01</span>
-                                <h2 class="text-3xl md:text-4xl text-white font-heading uppercase tracking-wide gold-glow-text">Ne-reaktivnost (Praznina)</h2>
-                            </div>
-                            <div class="mt-4 md:mt-0 opacity-40">
-                                <i class="fas fa-wind text-white text-5xl"></i>
-                            </div>
+        <!-- === FAZA 1: AUTORITET === -->
+
+        <!-- LEKCIJA 1: OKVIR (Frame) -->
+        <section id="lekcija1" class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2671&auto=format&fit=crop');">
+            <div class="lesson-overlay"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <article class="luxury-card p-8 md:p-12 reveal">
+                    <div class="flex justify-between items-start mb-8 border-b border-white/10 pb-6">
+                        <div>
+                            <span class="text-gold font-bold tracking-widest text-xs uppercase mb-2 block">FAZA I: USPOSTAVLJANJE</span>
+                            <h2 class="text-4xl md:text-5xl text-white font-heading uppercase">Gospodar Okvira</h2>
                         </div>
-                        
-                        <!-- Sadržaj -->
-                        <div class="grid md:grid-cols-2 gap-12">
-                            <div class="space-y-6 text-gray-300 font-light leading-relaxed text-sm md:text-base">
-                                <p><strong class="text-white">Osnovni Zakon:</strong> Ko kontroliše vašu reakciju, poseduje vaš um. Većina ljudi funkcioniše kao automat – pritisni dugme "uvreda", dobiješ bes. Pritisni dugme "pohvala", dobiješ ponos. U oba slučaja, predali ste suverenitet.</p>
-                                <p>Ne-reaktivnost nije pasivnost. To je strateško kreiranje "Vakuuma". Kada napadač ne dobije povratnu informaciju koju očekuje, on gubi ravnotežu jer udara u prazno. Tišina je najglasniji odgovor.</p>
-                                
-                                <div class="anatomy-box">
-                                    <h4 class="text-gold font-heading uppercase text-xs mb-2">Anatomija Psihe:</h4>
-                                    <p class="text-xs text-gray-400">Kada osetite napad, vaša amigdala (centar za strah) otima kontrolu od prefrontalnog korteksa (centra za logiku). Puls skače. Postajete gluplji i impulsivniji.</p>
-                                </div>
-
-                                <div class="mt-4">
-                                    <h4 class="text-white font-heading uppercase text-sm mb-2 border-b border-gray-800 pb-1 inline-block">Tehnika: Nozdrva Fokus</h4>
-                                    <ol class="list-decimal list-inside text-xs text-gray-300 mt-2 space-y-2">
-                                        <li>Zatvorite usta momentalno.</li>
-                                        <li>Svu mentalnu pažnju prebacite isključivo na <strong>ulazak vazduha u nozdrve</strong>.</li>
-                                        <li>Osetite fizičku hladnoću vazduha koji ulazi i toplotu onog koji izlazi.</li>
-                                        <li>Zadržite taj mikroskopski fokus 3 sekunde pre nego što progovorite. Ovo "resetuje" mozak.</li>
-                                    </ol>
-                                </div>
-                            </div>
-
-                            <!-- Infografika 1: Centriranje (IZMENJENO POZICIONIRANJE) -->
-                            <div class="infographic-box rounded-lg flex flex-col items-center justify-center p-8 min-h-[300px]">
-                                <span class="absolute top-3 left-3 text-[9px] text-gold uppercase tracking-widest border border-gold px-2 py-0.5">Sistem Odbrane</span>
-                                
-                                <div class="relative flex items-center justify-center w-full h-full py-10">
-                                    <div class="absolute w-40 h-40 border border-red-500/20 rounded-full animate-pulse"></div>
-                                    <div class="absolute w-60 h-60 border border-red-500/10 rounded-full animate-pulse delay-75"></div>
-                                    <div class="w-24 h-24 rounded-full border border-gold bg-black flex items-center justify-center breath-circle relative z-10">
-                                        <div class="text-center">
-                                            <i class="fas fa-lungs text-gold mb-1 text-xl opacity-80"></i>
-                                            <span class="block text-[8px] uppercase text-white font-bold tracking-widest">Centar</span>
-                                        </div>
-                                    </div>
-                                    <!-- Pomereni elementi bliže ivicama (left-1/right-1) -->
-                                    <div class="absolute left-1 text-red-500 text-[10px] font-bold animate-float opacity-70">UVREDA >></div>
-                                    <div class="absolute right-1 text-red-500 text-[10px] font-bold animate-float opacity-70" style="animation-delay: 1s;"><< LASKANJE</div>
-                                </div>
-                                <p class="text-[10px] text-gray-500 mt-4 text-center uppercase tracking-widest border-t border-gray-800 pt-2 w-full">Stimulans se razbija o zid fokusa</p>
-                            </div>
-                        </div>
-
-                        <!-- ZADATAK ZA DANAS -->
-                        <div class="mission-box mt-10 p-6 rounded-sm">
-                            <div class="flex items-start gap-4">
-                                <div class="bg-gold/20 p-2 rounded-full border border-gold text-gold">
-                                    <i class="fas fa-crosshairs"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-gold font-heading uppercase text-sm mb-2 tracking-widest">Zadatak za Danas</h4>
-                                    <p class="text-gray-300 text-sm font-light">
-                                        Identifikujte jedan trenutak danas kada osetite nestrpljenje ili iritaciju (u saobraćaju, redu, razgovoru). Umesto reakcije, uradite 3 ciklusa svesnog disanja fokusirajući se isključivo na hladnoću vazduha u nozdrvama. Ne reagujte dok ne završite 3. udah.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Kviz -->
-                        <div class="mt-12 pt-8 border-t border-white/10">
-                            <h3 class="text-gold font-heading uppercase text-sm mb-6 flex items-center gap-2">
-                                <i class="fas fa-chess-knight"></i> Provera Znanja
-                            </h3>
-                            <div class="quiz-container space-y-4">
-                                <div>
-                                    <p class="text-white text-sm mb-3 font-medium">1. Gde usmeravate apsolutnu pažnju čim osetite emotivni udar?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option" onclick="checkAnswer(this, true, 'Tačno. Fizička senzacija u nozdrvama prekida rad amigdale i vraća logiku.')">
-                                            <span>Na fizički osećaj temperature vazduha u nozdrvama.</span>
-                                        </div>
-                                        <div class="quiz-option" onclick="checkAnswer(this, false, 'Greška. To je reaktivno i amaterski.')">
-                                            <span>Na smišljanje najpametnijeg odgovora.</span>
-                                        </div>
-                                    </div>
-                                    <div class="feedback hidden text-xs p-3 rounded bg-black/40 border-l-2 mt-2 font-light"></div>
-                                </div>
-                                <div>
-                                    <p class="text-white text-sm mb-3 font-medium">2. Zašto je tišina (vakuum) moćna?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option" onclick="checkAnswer(this, true, 'Tačno. Ljudi projektuju svoje nesigurnosti u prazninu koju stvorite.')">
-                                            <span>Jer tera drugu osobu da se pravda i popunjava neprijatnu prazninu.</span>
-                                        </div>
-                                        <div class="quiz-option" onclick="checkAnswer(this, false, 'Greška. Tišina je kontrola.')">
-                                            <span>Jer pokazuje da nemam šta da kažem.</span>
-                                        </div>
-                                    </div>
-                                    <div class="feedback hidden text-xs p-3 rounded bg-black/40 border-l-2 mt-2 font-light"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- LEKCIJA 2 -->
-        <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1518050226102-0918c072669d?q=80&w=2670&auto=format&fit=crop');">
-            <div class="lesson-overlay">
-                <div class="container mx-auto px-4 md:px-6 max-w-5xl">
-                    <article class="luxury-card p-8 md:p-12 reveal rounded-sm">
-                        
-                        <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b border-white/5 pb-6">
-                            <div>
-                                <span class="text-gold font-bold tracking-widest text-xs mb-2 block">PROTOKOL #02</span>
-                                <h2 class="text-3xl md:text-4xl text-white font-heading uppercase tracking-wide gold-glow-text">Gravitacija Statusa</h2>
-                            </div>
-                            <div class="mt-4 md:mt-0 opacity-40">
-                                <i class="fas fa-anchor text-white text-5xl"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="grid md:grid-cols-2 gap-12">
-                            <div class="space-y-6 text-gray-300 font-light leading-relaxed text-sm md:text-base">
-                                <p><strong class="text-white">Osnovni Zakon:</strong> Brzina je odlika plena. U prirodi, brzi i trzavi pokreti signaliziraju strah (priprema za beg). Spori, fluidni pokreti signaliziraju da nema pretnje – dakle, signaliziraju dominaciju i "Bogatstvo Vremenom".</p>
-                                <p>Osoba visokog statusa se kreće kao da je vazduh oko nje gust kao voda. Ona kontroliše vreme, dok osoba niskog statusa oseća da "krade" tuđe vreme.</p>
-                                
-                                <div class="anatomy-box">
-                                    <h4 class="text-gold font-heading uppercase text-xs mb-2">Greške koje vas odaju:</h4>
-                                    <ul class="list-disc list-inside text-xs text-gray-400 space-y-1">
-                                        <li><strong class="text-white">Sindrom Klimoglavca:</strong> Prebrzo klimanje glavom dok slušate (znak podređenosti).</li>
-                                        <li><strong class="text-white">Upitna Intonacija:</strong> Podizanje glasa na kraju rečenice (traženje odobravanja).</li>
-                                        <li><strong class="text-white">Trzaj:</strong> Naglo okretanje celog tela na zvuk svog imena.</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Infografika 2: Speedometer -->
-                            <div class="infographic-box rounded-lg flex flex-col items-center justify-center p-8 min-h-[300px]">
-                                <span class="absolute top-3 left-3 text-[9px] text-gold uppercase tracking-widest border border-gold px-2 py-0.5">Merač Statusa</span>
-                                <div class="w-full max-w-[200px] relative mt-6">
-                                    <div class="w-4 h-48 bg-gray-900 mx-auto rounded-full overflow-hidden relative border border-gray-800 shadow-inner">
-                                        <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-gold via-yellow-700 to-transparent opacity-90"></div>
-                                        <div class="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-red-900 via-red-900/50 to-transparent opacity-80"></div>
-                                        <div class="absolute left-0 w-full h-1 bg-white shadow-[0_0_15px_white] transition-all duration-1000 top-[75%] z-10" id="status-indicator"></div>
-                                    </div>
-                                    <div class="absolute top-0 -right-12 text-[8px] text-red-500 uppercase tracking-widest">Plen<br>(Brzo)</div>
-                                    <div class="absolute bottom-0 -right-12 text-[8px] text-gold uppercase tracking-widest font-bold">Predator<br>(Sporo)</div>
-                                </div>
-                                <p class="text-[10px] text-gray-500 mt-6 text-center w-2/3 mx-auto">Cilj: Usporite svaku fizičku radnju za 20%.</p>
-                            </div>
-                        </div>
-
-                         <!-- ZADATAK ZA DANAS -->
-                         <div class="mission-box mt-10 p-6 rounded-sm">
-                            <div class="flex items-start gap-4">
-                                <div class="bg-gold/20 p-2 rounded-full border border-gold text-gold">
-                                    <i class="fas fa-crosshairs"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-gold font-heading uppercase text-sm mb-2 tracking-widest">Zadatak za Danas</h4>
-                                    <p class="text-gray-300 text-sm font-light">
-                                        Na sledećem sastanku, kafi ili u interakciji sa prodavcem, svesno usporite svaki pokret rukom za 20%. Kada uzimate šolju, telefon ili novčanik, uradite to bez trzaja, kao kroz vodu. Kada vas neko pozove, okrenite se polako, celim torzom.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Kviz -->
-                        <div class="mt-12 pt-8 border-t border-white/10">
-                            <h3 class="text-gold font-heading uppercase text-sm mb-6 flex items-center gap-2">
-                                <i class="fas fa-chess-knight"></i> Provera Znanja
-                            </h3>
-                            <div class="quiz-container space-y-4">
-                                <div>
-                                    <p class="text-white text-sm mb-3 font-medium">1. Šta biološki signaliziraju brzi, trzavi pokreti?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option" onclick="checkAnswer(this, true, 'Tačno. Telo se priprema za beg (Fight or Flight).')">
-                                            <span>Strah, anksioznost i nizak status.</span>
-                                        </div>
-                                        <div class="quiz-option" onclick="checkAnswer(this, false, 'Netačno. Efikasnost je smirena.')">
-                                            <span>Energiju i visoku efikasnost.</span>
-                                        </div>
-                                    </div>
-                                    <div class="feedback hidden text-xs p-3 rounded bg-black/40 border-l-2 mt-2 font-light"></div>
-                                </div>
-                                <div>
-                                    <p class="text-white text-sm mb-3 font-medium">2. Kakva treba da bude intonacija na kraju izjave da bi zvučala autoritativno?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option" onclick="checkAnswer(this, false, 'Ne. To zvuči kao da niste sigurni u to što govorite.')">
-                                            <span>Uzlazna (kao da postavljate pitanje).</span>
-                                        </div>
-                                        <div class="quiz-option" onclick="checkAnswer(this, true, 'Tačno. To se zove "Zapovedni Tonalitet".')">
-                                            <span>Silazna (spuštanje tona ka dubljem registru).</span>
-                                        </div>
-                                    </div>
-                                    <div class="feedback hidden text-xs p-3 rounded bg-black/40 border-l-2 mt-2 font-light"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- LEKCIJA 3 -->
-        <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2670&auto=format&fit=crop');">
-            <div class="lesson-overlay">
-                <div class="container mx-auto px-4 md:px-6 max-w-5xl">
-                    <article class="luxury-card p-8 md:p-12 reveal rounded-sm">
-                        
-                        <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b border-white/5 pb-6">
-                            <div>
-                                <span class="text-gold font-bold tracking-widest text-xs mb-2 block">PROTOKOL #03</span>
-                                <h2 class="text-3xl md:text-4xl text-white font-heading uppercase tracking-wide gold-glow-text">Ugrađene Komande</h2>
-                            </div>
-                            <div class="mt-4 md:mt-0 opacity-40">
-                                <i class="fas fa-microchip text-white text-5xl"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="grid md:grid-cols-2 gap-12">
-                            <div class="space-y-6 text-gray-300 font-light leading-relaxed text-sm md:text-base">
-                                <p><strong class="text-white">Osnovni Zakon:</strong> Ljudski um poseduje "Stražara" (Kritički Faktor) koji po automatizmu odbija direktne naredbe. Ako kažete "Veruj mi", stražar kaže "Neću". Ako kažete "Kupi ovo", stražar kaže "Zašto?".</p>
-                                <p>Rešenje je "Trojanski Konj". Komandu sakrivamo unutar duže, logične i bezazlene rečenice. Stražar propušta rečenicu jer deluje bezopasno, ali podsvest hvata skrivenu poruku.</p>
-                                
-                                <div class="anatomy-box">
-                                    <h4 class="text-gold font-heading uppercase text-xs mb-2">Tehnika: Analogno Obeležavanje</h4>
-                                    <p class="text-xs text-gray-400">Deo rečenice koji je komanda mora se zvučno izdvojiti od ostatka:</p>
-                                    <ul class="list-disc list-inside text-xs text-white mt-2 space-y-1">
-                                        <li>Spustite glas za nijansu dublje na ključnim rečima.</li>
-                                        <li>Napravite mikro-pauzu PRE i POSLE komande.</li>
-                                        <li>Blago raširite ruke ili usmerite dlan ka osobi (vizuelno sidrenje).</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Infografika 3: Text Highlight -->
-                            <div class="infographic-box rounded-lg flex flex-col items-center justify-center p-8 min-h-[300px]">
-                                <span class="absolute top-3 left-3 text-[9px] text-gold uppercase tracking-widest border border-gold px-2 py-0.5">Lingvističko Programiranje</span>
-                                <div class="text-center w-full relative z-10">
-                                    <div class="text-gray-500 text-xs md:text-sm mb-4 font-mono opacity-60">"Ja ne znam da li vi možete..."</div>
-                                    <div class="relative inline-block my-2 group cursor-none">
-                                        <div class="absolute inset-0 bg-gold blur-xl opacity-20 animate-pulse-slow"></div>
-                                        <div class="border border-gold text-gold font-bold px-6 py-3 rounded text-sm md:text-lg uppercase tracking-widest bg-black relative z-10 shadow-[0_0_25px_rgba(197,160,89,0.3)] transform transition-transform group-hover:scale-105">POČETI DA VERUJETE</div>
-                                    </div>
-                                    <div class="text-gray-500 text-xs md:text-sm mt-4 font-mono opacity-60">"...u ovo odmah ili kasnije."</div>
-                                </div>
-                                <div class="mt-8 flex gap-4 text-[9px] text-gray-400 uppercase tracking-widest border-t border-gray-800 pt-4">
-                                    <span class="flex items-center gap-2"><i class="fas fa-arrow-down text-gold"></i> Dublji Ton</span>
-                                    <span class="flex items-center gap-2"><i class="fas fa-pause text-gold"></i> Pauza</span>
-                                </div>
-                            </div>
-                        </div>
-
-                         <!-- ZADATAK ZA DANAS -->
-                         <div class="mission-box mt-10 p-6 rounded-sm">
-                            <div class="flex items-start gap-4">
-                                <div class="bg-gold/20 p-2 rounded-full border border-gold text-gold">
-                                    <i class="fas fa-crosshairs"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-gold font-heading uppercase text-sm mb-2 tracking-widest">Zadatak za Danas</h4>
-                                    <p class="text-gray-300 text-sm font-light">
-                                        U razgovoru sa prijateljem ili kolegom, probajte da "usadite" stanje opuštenosti. Recite rečenicu: "Nekad je dobro da čovek samo sedne i da se [pauza] <strong>opusti</strong> [pauza] na par minuta." Naglasite reč "opusti" dubljim tonom.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Kviz -->
-                        <div class="mt-12 pt-8 border-t border-white/10">
-                            <h3 class="text-gold font-heading uppercase text-sm mb-6 flex items-center gap-2">
-                                <i class="fas fa-chess-knight"></i> Provera Znanja
-                            </h3>
-                            <div class="quiz-container space-y-4">
-                                <div>
-                                    <p class="text-white text-sm mb-3 font-medium">1. Šta je funkcija "Kritičkog Faktora" u svesti?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option" onclick="checkAnswer(this, true, 'Tačno. Zato direktno ubeđivanje retko radi.')">
-                                            <span>To je mentalni filter koji analizira i odbija direktne naredbe.</span>
-                                        </div>
-                                        <div class="quiz-option" onclick="checkAnswer(this, false, 'Ne.')">
-                                            <span>To je deo mozga zadužen za memoriju.</span>
-                                        </div>
-                                    </div>
-                                    <div class="feedback hidden text-xs p-3 rounded bg-black/40 border-l-2 mt-2 font-light"></div>
-                                </div>
-                                <div>
-                                    <p class="text-white text-sm mb-3 font-medium">2. Kako izgovaramo skrivenu komandu?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option" onclick="checkAnswer(this, false, 'Greška. To zvuči veštački.')">
-                                            <span>Glasno i brzo, da ne primete.</span>
-                                        </div>
-                                        <div class="quiz-option" onclick="checkAnswer(this, true, 'Tačno. To se zove Analogno Obeležavanje.')">
-                                            <span>Malo dubljim tonom, uz kratke pauze pre i posle ključnih reči.</span>
-                                        </div>
-                                    </div>
-                                    <div class="feedback hidden text-xs p-3 rounded bg-black/40 border-l-2 mt-2 font-light"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- LEKCIJA 4 -->
-        <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1461696114087-397271a7aedc?q=80&w=2670&auto=format&fit=crop');">
-            <div class="lesson-overlay">
-                <div class="container mx-auto px-4 md:px-6 max-w-5xl">
-                    <article class="luxury-card p-8 md:p-12 reveal rounded-sm">
-                        
-                        <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b border-white/5 pb-6">
-                            <div>
-                                <span class="text-gold font-bold tracking-widest text-xs mb-2 block">PROTOKOL #04</span>
-                                <h2 class="text-3xl md:text-4xl text-white font-heading uppercase tracking-wide gold-glow-text">Buduće Sećanje</h2>
-                            </div>
-                            <div class="mt-4 md:mt-0 opacity-40">
-                                <i class="fas fa-hourglass-half text-white text-5xl"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="grid md:grid-cols-2 gap-12">
-                            <div class="space-y-6 text-gray-300 font-light leading-relaxed text-sm md:text-base">
-                                <p><strong class="text-white">Osnovni Zakon:</strong> Strah od odluke živi isključivo u Sadašnjosti. Sigurnost živi u Prošlosti (kada znamo da je sve prošlo dobro).
-                                Ova tehnika mentalno teleportuje osobu u Budućnost, gde je problem već rešen, i tera je da gleda unazad na trenutak odluke.</p>
-                                <p>Umesto da ih ubeđujete "DA LI" je nešto dobro (što izaziva otpor), vi lingvistički pretpostavljate da se uspeh već desio.</p>
-                                
-                                <div class="anatomy-box">
-                                    <h4 class="text-gold font-heading uppercase text-xs mb-2">Ključna Fraza: "Kada se setite..."</h4>
-                                    <p class="text-xs text-gray-400">Primer: "Razumem da sada osećate nesigurnost, ali <strong class="text-white">kada se za 6 meseci budete setili</strong> ovog razgovora, biće vam drago što ste presekli i doneli pravu odluku."</p>
-                                </div>
-                            </div>
-
-                            <!-- Infografika 4: Time Distortion -->
-                            <div class="infographic-box rounded-lg flex flex-col items-center justify-center p-8 min-h-[300px]">
-                                <span class="absolute top-3 left-3 text-[9px] text-gold uppercase tracking-widest border border-gold px-2 py-0.5">Distorzija Vremena</span>
-                                <div class="w-full relative h-32 flex items-center mt-4">
-                                    <div class="w-full h-px bg-gray-800 absolute top-1/2"></div>
-                                    <div class="absolute left-6 top-1/2 -translate-y-1/2 text-center group">
-                                        <div class="w-3 h-3 bg-red-900 rounded-full mb-2 mx-auto border border-red-500"></div>
-                                        <span class="text-[8px] uppercase text-gray-500">Sadašnjost<br>(Strah)</span>
-                                    </div>
-                                    <svg class="absolute top-0 left-10 w-[75%] h-full pointer-events-none overflow-visible">
-                                        <path d="M 0,64 Q 100,-20 200,64" stroke="#C5A059" stroke-width="1" fill="none" stroke-dasharray="4,4" class="opacity-50">
-                                            <animate attributeName="stroke-dashoffset" from="100" to="0" dur="3s" repeatCount="indefinite" />
-                                        </path>
-                                        <circle cx="200" cy="64" r="3" fill="#C5A059">
-                                            <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite" />
-                                        </circle>
-                                    </svg>
-                                    <div class="absolute right-6 top-1/2 -translate-y-1/2 text-center">
-                                        <div class="w-5 h-5 bg-gold rounded-full mb-2 mx-auto shadow-[0_0_15px_#C5A059] flex items-center justify-center">
-                                            <i class="fas fa-check text-[10px] text-black"></i>
-                                        </div>
-                                        <span class="text-[9px] uppercase text-gold font-bold">Budućnost</span>
-                                        <span class="text-[8px] block text-gray-500">(Problem Rešen)</span>
-                                    </div>
-                                </div>
-                                <p class="text-[10px] text-gray-500 mt-6 text-center">Preskačemo "Ako" i idemo direktno na "Kada"</p>
-                            </div>
-                        </div>
-
-                         <!-- ZADATAK ZA DANAS -->
-                         <div class="mission-box mt-10 p-6 rounded-sm">
-                            <div class="flex items-start gap-4">
-                                <div class="bg-gold/20 p-2 rounded-full border border-gold text-gold">
-                                    <i class="fas fa-crosshairs"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-gold font-heading uppercase text-sm mb-2 tracking-widest">Zadatak za Danas</h4>
-                                    <p class="text-gray-300 text-sm font-light">
-                                        Pronađite nekoga ko okleva oko male odluke (gde jesti, koji film gledati). Umesto da ih ubeđujete, recite: "Znam da se dvoumiš, ali <strong>kada se budemo setili</strong> koliko smo se dobro proveli uz [Vaš predlog], biće ti drago što smo otišli tamo."
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Kviz -->
-                        <div class="mt-12 pt-8 border-t border-white/10">
-                            <h3 class="text-gold font-heading uppercase text-sm mb-6 flex items-center gap-2">
-                                <i class="fas fa-chess-knight"></i> Provera Znanja
-                            </h3>
-                            <div class="quiz-container space-y-4">
-                                <div>
-                                    <p class="text-white text-sm mb-3 font-medium">1. Zašto izbegavamo reč "Ako" u ubeđivanju?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option" onclick="checkAnswer(this, true, 'Tačno. "Kada" implicira neizbežnost uspeha.')">
-                                            <span>"Ako" unosi sumnju i mogućnost neuspeha. "Kada" unosi sigurnost.</span>
-                                        </div>
-                                        <div class="quiz-option" onclick="checkAnswer(this, false, 'Netačno.')">
-                                            <span>Zato što zvuči nepristojno.</span>
-                                        </div>
-                                    </div>
-                                    <div class="feedback hidden text-xs p-3 rounded bg-black/40 border-l-2 mt-2 font-light"></div>
-                                </div>
-                                <div>
-                                    <p class="text-white text-sm mb-3 font-medium">2. Šta se dešava u umu sagovornika kada koristimo ovu tehniku?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option" onclick="checkAnswer(this, true, 'Tačno. To se zove mentalna disocijacija.')">
-                                            <span>Odvaja se od trenutnog pritiska i posmatra situaciju iz ugla budućeg uspeha.</span>
-                                        </div>
-                                        <div class="quiz-option" onclick="checkAnswer(this, false, 'Greška.')">
-                                            <span>Postaje zbunjen vremenskim odrednicama.</span>
-                                        </div>
-                                    </div>
-                                    <div class="feedback hidden text-xs p-3 rounded bg-black/40 border-l-2 mt-2 font-light"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- LEKCIJA 5 -->
-        <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1506452819137-0422416856b8?q=80&w=2573&auto=format&fit=crop');">
-            <div class="lesson-overlay">
-                <div class="container mx-auto px-4 md:px-6 max-w-5xl">
-                    <article class="luxury-card p-8 md:p-12 reveal rounded-sm">
-                        
-                        <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b border-white/5 pb-6">
-                            <div>
-                                <span class="text-gold font-bold tracking-widest text-xs mb-2 block">PROTOKOL #05</span>
-                                <h2 class="text-3xl md:text-4xl text-white font-heading uppercase tracking-wide gold-glow-text">Dugme za Isključivanje Zvuka</h2>
-                            </div>
-                            <div class="mt-4 md:mt-0 opacity-40">
-                                <i class="fas fa-volume-mute text-white text-5xl"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="grid md:grid-cols-2 gap-12">
-                            <div class="space-y-6 text-gray-300 font-light leading-relaxed text-sm md:text-base">
-                                <p><strong class="text-white">Osnovni Zakon:</strong> Najopasniji manipulatori ne koriste silu, već "Lažiranje Budućnosti" (Future Faking). Oni vam govore tačno ono što vaš ego očajnički želi da čuje, dok njihova dela govore suprotno.</p>
-                                <p>To stvara <strong>Kognitivnu Disonancu</strong> - bolno mentalno stanje gde mozak pokušava da pomiri dve suprotne istine (on me voli vs. on me povređuje). Obično žrtva odluči da veruje rečima jer je to lakše nego suočavanje sa bolnom istinom.</p>
-                                
-                                <div class="anatomy-box">
-                                    <h4 class="text-gold font-heading uppercase text-xs mb-2">Tehnika: Isključi Ton (Mute)</h4>
-                                    <p class="text-xs text-gray-400">Zamisli da posmatraš tu osobu na filmu, ali si pritisnuo "Mute". Ne čuješ "Volim te", "Platiću ti sutra", "Ti si najbolji radnik". Vidiš samo fizičku realnost pokreta.</p>
-                                    <p class="text-white text-xs mt-2 font-bold border-t border-white/10 pt-2">ZLATNO PRAVILO: AKO SE REČI I DELA NE POKLAPAJU, REČI SU LAŽ.</p>
-                                </div>
-                            </div>
-
-                            <!-- Infografika 5: Filter -->
-                            <div class="infographic-box rounded-lg flex flex-col items-center justify-center p-8 min-h-[300px]">
-                                <span class="absolute top-3 left-3 text-[9px] text-gold uppercase tracking-widest border border-gold px-2 py-0.5">Filter Istine</span>
-                                <div class="flex items-center gap-8 md:gap-16 relative z-10">
-                                    <div class="flex flex-col items-center opacity-30 group hover:opacity-100 transition-opacity cursor-help">
-                                        <i class="fas fa-ear-listen text-4xl mb-3 text-gray-500"></i>
-                                        <span class="text-[10px] uppercase text-red-500 line-through tracking-widest">REČI</span>
-                                        <span class="text-[8px] text-gray-600 mt-1">Slatke Laži</span>
-                                    </div>
-                                    <div class="h-32 w-px bg-gradient-to-b from-transparent via-gold to-transparent opacity-50"></div>
-                                    <div class="flex flex-col items-center">
-                                        <div class="relative">
-                                            <i class="fas fa-eye text-5xl mb-3 text-gold drop-shadow-[0_0_10px_rgba(197,160,89,0.5)]"></i>
-                                            <div class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
-                                        </div>
-                                        <span class="text-[10px] uppercase text-white font-bold tracking-widest">DELA</span>
-                                        <span class="text-[8px] text-gray-400 mt-1">Jedina Realnost</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                         <!-- ZADATAK ZA DANAS -->
-                         <div class="mission-box mt-10 p-6 rounded-sm">
-                            <div class="flex items-start gap-4">
-                                <div class="bg-gold/20 p-2 rounded-full border border-gold text-gold">
-                                    <i class="fas fa-crosshairs"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-gold font-heading uppercase text-sm mb-2 tracking-widest">Zadatak za Danas</h4>
-                                    <p class="text-gray-300 text-sm font-light">
-                                        Izaberite jednu osobu iz svog okruženja (šef, partner, prijatelj). Danas, svaki put kad vam se obrati, u glavi pritisnite "Mute dugme". Potpuno ignorišite značenje reči i samo se zapitajte: "Šta ova osoba <em>radi</em> dok ovo govori?".
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Kviz -->
-                        <div class="mt-12 pt-8 border-t border-white/10">
-                            <h3 class="text-gold font-heading uppercase text-sm mb-6 flex items-center gap-2">
-                                <i class="fas fa-chess-knight"></i> Provera Znanja
-                            </h3>
-                            <div class="quiz-container space-y-4">
-                                <div>
-                                    <p class="text-white text-sm mb-3 font-medium">1. Šta je kognitivna disonanca u kontekstu manipulacije?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option" onclick="checkAnswer(this, true, 'Tačno. Mozak boli od kontradikcije, pa biramo laž jer je utešna.')">
-                                            <span>Mentalni sukob kada dela osobe govore jedno, a reči drugo.</span>
-                                        </div>
-                                        <div class="quiz-option" onclick="checkAnswer(this, false, 'Ne.')">
-                                            <span>Kada neko zaboravi šta je obećao.</span>
-                                        </div>
-                                    </div>
-                                    <div class="feedback hidden text-xs p-3 rounded bg-black/40 border-l-2 mt-2 font-light"></div>
-                                </div>
-                                <div>
-                                    <p class="text-white text-sm mb-3 font-medium">2. Šta radite kada primetite neslaganje između reči i dela?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option" onclick="checkAnswer(this, false, 'Greška. Oni će samo izmisliti bolju laž da pokriju prethodnu.')">
-                                            <span>Suočavam ih sa istinom i tražim objašnjenje.</span>
-                                        </div>
-                                        <div class="quiz-option" onclick="checkAnswer(this, true, 'Tačno. Verujte videu, ignorišite audio.')">
-                                            <span>Potpuno ignorišem reči i prilagođavam svoje poteze njihovim delima.</span>
-                                        </div>
-                                    </div>
-                                    <div class="feedback hidden text-xs p-3 rounded bg-black/40 border-l-2 mt-2 font-light"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- LEKCIJA 6 -->
-        <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=2535&auto=format&fit=crop');">
-            <div class="lesson-overlay">
-                <div class="container mx-auto px-4 md:px-6 max-w-5xl">
-                    <article class="luxury-card p-8 md:p-12 reveal rounded-sm border-l-2 border-l-red-900/50">
-                        
-                        <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b border-white/5 pb-6">
-                            <div>
-                                <span class="text-gold font-bold tracking-widest text-xs mb-2 block">PROTOKOL #06</span>
-                                <h2 class="text-3xl md:text-4xl text-white font-heading uppercase tracking-wide gold-glow-text">Oružje Krivice</h2>
-                            </div>
-                            <div class="mt-4 md:mt-0 opacity-40">
-                                <i class="fas fa-shield-alt text-white text-5xl"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="grid md:grid-cols-2 gap-12">
-                            <div class="space-y-6 text-gray-300 font-light leading-relaxed text-sm md:text-base">
-                                <p><strong class="text-white">Osnovni Zakon:</strong> Krivica je "nuklearno oružje" protiv savestnih ljudi. Manipulator implicitno kaže: "Ja patim, ti si kriv, plati mi (pažnjom, novcem, uslugom)".</p>
-                                <p>Oni vas uvlače u zamku zvanu <strong>P.S.O.O. (Pravdanje, Svađa, Odbrana, Objašnjavanje)</strong>. Ako počnete da se pravdate ("Nisam sebičan, nego..."), već ste izgubili jer ste prihvatili ulogu "optuženog" kome treba odbrana.</p>
-                                
-                                <div class="bg-white/5 p-4 border-l-2 border-red-900 mt-4">
-                                    <h4 class="text-red-500 font-heading uppercase text-sm mb-2">Tehnika: Pokvarena Ploča</h4>
-                                    <p class="text-xs text-gray-400">Ne menjajte intonaciju. Ne budite emotivni. Budite dosadni kao mašina.</p>
-                                    <p class="text-white italic text-xs mt-2 space-y-1">
-                                        <span class="block"><span class="text-red-400">Oni:</span> "Ti si užasna osoba, kako možeš!"</span>
-                                        <span class="block"><span class="text-gold">Vi:</span> "Razumem da si ljut, ali neću to uraditi."</span>
-                                        <span class="block"><span class="text-red-400">Oni:</span> "Nikad ti nije stalo do mene!"</span>
-                                        <span class="block"><span class="text-gold">Vi:</span> "Čujem tvoje mišljenje, ali neću to uraditi."</span>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Infografika 6: Shield -->
-                            <div class="infographic-box rounded-lg flex flex-col items-center justify-center p-8 min-h-[300px]">
-                                <span class="absolute top-3 left-3 text-[9px] text-red-500 uppercase tracking-widest border border-red-500 px-2 py-0.5">Aktivna Odbrana</span>
-                                <div class="relative w-full flex items-center justify-center mt-6">
-                                    <div class="absolute left-0 space-y-6">
-                                        <div class="flex items-center gap-2 animate-pulse opacity-80">
-                                            <span class="text-[8px] uppercase text-red-500 hidden md:inline tracking-widest">Optužba</span>
-                                            <i class="fas fa-caret-right text-red-500 text-2xl"></i>
-                                        </div>
-                                        <div class="flex items-center gap-2 animate-pulse opacity-80" style="animation-delay: 0.5s;">
-                                            <span class="text-[8px] uppercase text-red-500 hidden md:inline tracking-widest">Krivica</span>
-                                            <i class="fas fa-caret-right text-red-500 text-2xl"></i>
-                                        </div>
-                                        <div class="flex items-center gap-2 animate-pulse opacity-80" style="animation-delay: 1s;">
-                                            <span class="text-[8px] uppercase text-red-500 hidden md:inline tracking-widest">Bes</span>
-                                            <i class="fas fa-caret-right text-red-500 text-2xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="w-36 h-36 rounded-full border border-gold/50 bg-black flex items-center justify-center relative z-10 shield-pulse ml-16 shadow-[0_0_30px_rgba(197,160,89,0.2)]">
-                                        <div class="text-center">
-                                            <i class="fas fa-shield-halved text-gold text-4xl mb-2"></i>
-                                            <div class="text-[8px] text-white uppercase font-bold tracking-widest">Granica</div>
-                                            <div class="text-[7px] text-gray-500 uppercase">Neprobojna</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                         <!-- ZADATAK ZA DANAS -->
-                         <div class="mission-box mt-10 p-6 rounded-sm">
-                            <div class="flex items-start gap-4">
-                                <div class="bg-gold/20 p-2 rounded-full border border-gold text-gold">
-                                    <i class="fas fa-crosshairs"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-gold font-heading uppercase text-sm mb-2 tracking-widest">Zadatak za Danas</h4>
-                                    <p class="text-gray-300 text-sm font-light">
-                                        Danas recite "Ne" na jedan mali, nebitan zahtev (npr. "Možeš li da dodaš ono?", "Hoćeš da ideš tamo?"). Recite samo: "Ne mogu sada" ili "Ne bih". Ne dajte nikakvo opravdanje. Posmatrajte kako se osećate dok držite taj vakuum bez izvinjavanja.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Kviz -->
-                        <div class="mt-12 pt-8 border-t border-white/10">
-                            <h3 class="text-gold font-heading uppercase text-sm mb-6 flex items-center gap-2">
-                                <i class="fas fa-chess-knight"></i> Provera Znanja
-                            </h3>
-                            <div class="quiz-container space-y-4">
-                                <div>
-                                    <p class="text-white text-sm mb-3 font-medium">1. Šta znači akronim P.S.O.O. (zamka koju treba izbeći)?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option" onclick="checkAnswer(this, true, 'Tačno. Svaka od ovih reakcija daje energiju manipulatoru.')">
-                                            <span>Pravdanje, Svađa, Odbrana, Objašnjavanje.</span>
-                                        </div>
-                                        <div class="quiz-option" onclick="checkAnswer(this, false, 'Netačno.')">
-                                            <span>Prihvatanje, Slušanje, Odbijanje, Odlazak.</span>
-                                        </div>
-                                    </div>
-                                    <div class="feedback hidden text-xs p-3 rounded bg-black/40 border-l-2 mt-2 font-light"></div>
-                                </div>
-                                <div>
-                                    <p class="text-white text-sm mb-3 font-medium">2. Koja emocija je ključna za uspeh tehnike "Pokvarena Ploča"?</p>
-                                    <div class="quiz-options">
-                                        <div class="quiz-option" onclick="checkAnswer(this, false, 'Ne. Bes znači da su vas pogodili, što je njihov cilj.')">
-                                            <span>Bes i pravednički gnev.</span>
-                                        </div>
-                                        <div class="quiz-option" onclick="checkAnswer(this, true, 'Tačno. Neutralnost i dosada ubijaju dramu.')">
-                                            <span>Smirenost i dosada (neutralnost).</span>
-                                        </div>
-                                    </div>
-                                    <div class="feedback hidden text-xs p-3 rounded bg-black/40 border-l-2 mt-2 font-light"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- LEKCIJA 7 (FINALE) -->
-        <section id="lesson-7" class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1620641788421-7f1c33b74304?q=80&w=2670&auto=format&fit=crop');">
-            <div class="lesson-overlay">
-                <div class="container mx-auto px-4 md:px-6 max-w-5xl">
-                    <article class="luxury-card p-8 md:p-12 reveal rounded-sm border-l-2 border-l-gold">
-                        
-                        <!-- Header -->
-                        <div class="flex flex-col md:flex-row justify-between items-start mb-8 border-b border-white/5 pb-6">
-                            <div>
-                                <span class="text-gold font-bold tracking-widest text-xs mb-2 block">PROTOKOL #07</span>
-                                <h2 class="text-3xl md:text-4xl text-white font-heading uppercase tracking-wide gold-glow-text">FINALE — Uzmi ono što ti pripada</h2>
-                                 <p class="text-xs text-gray-400 mt-2 font-mono border-l border-gold pl-2">Ceo Sistem — Centralni Protokol: 30 Alata, 20 min dnevno. + 50 Trikova uticaja + Mini sistem 'Citanja' misli</p>
-                            </div>
-                            <div class="mt-4 md:mt-0 opacity-40">
-                                <i class="fas fa-crown text-white text-5xl"></i>
-                            </div>
-                        </div>
-
-                        <!-- Main Content -->
-                        <div class="grid md:grid-cols-2 gap-12">
-                            <div class="space-y-6 text-gray-300 font-light leading-relaxed text-sm md:text-base">
-                                <p class="font-medium text-white">Ako ti je dosta da manje vredni od tebe bolje prolaze samo zato što su se 'snašli', ova lekcija ti vraća sve propuštene šanse. Ovi alati utiču na celu tvoju realnost — novac, odnose, poštovanje, posao. Gledaj kako sada uzimaš sve što do sada nisi znao da uzmeš.</p>
-                                
-                                <ul class="list-none space-y-3 mt-4">
-                                    <li class="flex items-center gap-3"><i class="fas fa-check text-gold text-xs"></i> Veća plata i bolji autoritet u razgovorima.</li>
-                                    <li class="flex items-center gap-3"><i class="fas fa-check text-gold text-xs"></i> Jači odnosi u porodici i društvu.</li>
-                                    <li class="flex items-center gap-3"><i class="fas fa-check text-gold text-xs"></i> Poštovanje koje ti pripada.</li>
-                                    <li class="flex items-center gap-3"><i class="fas fa-check text-gold text-xs"></i> Jednostavan ritual koji menja percepciju drugih o tebi.</li>
-                                </ul>
-
-                                <!-- VALUE STACK (TEXT ONLY) -->
-                                <div class="mt-8 bg-white/5 border border-gold/30 p-6 rounded-sm relative overflow-hidden shadow-[0_0_30px_rgba(197,160,89,0.05)]">
-                                    <div class="absolute -right-6 -top-6 text-gold/5 text-9xl transform rotate-12"><i class="fas fa-box-open"></i></div>
-                                    <h4 class="text-white font-heading uppercase text-sm mb-4 tracking-widest relative z-10 border-b border-white/10 pb-2">U ovom sistemu dobijaš:</h4>
-                                    <ul class="space-y-3 relative z-10">
-                                        <li class="text-gray-300 text-sm flex items-start gap-3">
-                                            <span class="text-gold text-xs"><i class="fas fa-play"></i></span> 
-                                            <span class="font-bold text-white">Centralni Protokol:</span> 30 ALATA za fokus, kontrolu i jasnu prednost u svakom razgovoru
-                                        </li>
-                                        <li class="text-gray-300 text-sm flex items-start gap-3">
-                                            <span class="text-gold text-xs"><i class="fas fa-play"></i></span> 
-                                            <span class="font-bold text-white">Protokol „Čitanja Ljudi“:</span> prepoznaje motive i namere pre nego što ih drugi pokažu
-                                        </li>
-                                        <li class="text-gray-300 text-sm flex items-start gap-3">
-                                            <span class="text-gold text-xs"><i class="fas fa-play"></i></span> 
-                                            <span class="font-bold text-white">50 Trikova Uticaja:</span> odmah primenljiva moć u svakodnevnim situacijama
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- Narrative & CTA Box (CLEAN - NO PRICES) -->
-                            <div class="infographic-box rounded-lg flex flex-col items-center justify-center p-8 relative">
-                                
-                                <div class="text-center w-full mb-6 relative z-10">
-                                    <p class="text-gray-300 text-sm leading-relaxed font-light italic">
-                                        „Stigao si do kraja Lekcije 7 i već sada osećaš razliku.<br>
-                                        Ono što si do sada pokušavao da uzmeš, a nisi znao kako, sada postaje opipljivo i stvarno.<br>
-                                        Ovo što vidiš je samo 1% celog Sistema – ali već taj prvi procenat ti daje jasnu prednost.<br>
-                                        Već sada primećuješ prilike koje ranije nisi video – više novca, bolju kontrolu u odnosima, poštovanje i autoritet.<br>
-                                        Svaki alat i trik u ovom sistemu vodi te ka jasnom rezultatu: da prepoznaš šanse i odmah ih uzmeš.<br>
-                                        Fokus je na tebi i koristi koju odmah možeš da osetiš.<br>
-                                        <strong class="text-white">Sada je trenutak da završiš Protokol i uzmeš ono što ti realno pripada.</strong>“
-                                    </p>
-                                </div>
-                                
-                                <button onclick="openModal()" class="mt-4 bg-gold text-black font-bold uppercase tracking-widest px-8 py-3 rounded-sm hover:bg-white transition-all duration-300 shadow-[0_0_20px_rgba(197,160,89,0.3)] animate-pulse-slow">
-                                    Uzmi ono što ti pripada
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- MODAL KARTICA (CRNI DIZAJN - SVE CENE OVDE) - SMANJENA ZA 20% (scale-[0.8]) -->
-        <div id="paymentModal" class="fixed inset-0 z-[100] hidden">
-            <div class="absolute inset-0 bg-black/95 backdrop-blur-md" onclick="closeModal()"></div>
-            <!-- Dodat scale-[0.8] da se smanji kartica -->
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6 scale-[0.8]">
-                <div class="bg-black border border-gold/50 p-8 rounded shadow-[0_0_60px_rgba(197,160,89,0.15)] relative">
-                    <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
-                    
-                    <h3 class="text-gold font-heading text-xl uppercase mb-6 text-center tracking-widest">Uplata i potvrda — Uzmi ono što ti pripada</h3>
-                    
-                    <div id="modalContent">
-                        <!-- Benefiti Modala (VREDNOST PAKETA) -->
-                        <div class="bg-white/5 p-4 rounded mb-4 text-sm text-gray-300 border border-white/10">
-                            <h4 class="text-white font-bold uppercase text-xs mb-3 border-b border-white/10 pb-2">Vrednost Paketa:</h4>
-                            <ul class="space-y-2 text-xs">
-                                <li class="flex justify-between"><span><i class="fas fa-check text-gold mr-2"></i>Centralni Protokol</span> <span class="text-white font-mono">30 €</span></li>
-                                <li class="flex justify-between"><span><i class="fas fa-check text-gold mr-2"></i>Protokol ‘Čitanja Ljudi’</span> <span class="text-white font-mono">20 €</span></li>
-                                <li class="flex justify-between"><span><i class="fas fa-check text-gold mr-2"></i>50 Trikova Uticaja</span> <span class="text-white font-mono">15 €</span></li>
-                                <li class="flex justify-between border-t border-white/10 pt-2 mt-1 font-bold"><span class="text-gold">UKUPNO VREDNOST:</span> <span class="text-gold font-mono">65 €</span></li>
-                            </ul>
-                        </div>
-
-                        <!-- CENA + TAJMER -->
-                        <div class="text-center py-4 border-y border-gold/20 my-6 bg-gold/5" id="modalPriceContainer">
-                            <!-- JS will populate this -->
-                        </div>
-
-                        <!-- Uputstvo -->
-                        <div class="text-xs text-gray-400 mb-6 space-y-2">
-                            <p class="flex gap-2"><span class="text-gold font-bold">1.</span> <span>Uplati preko Western Uniona direktno <a href="https://www.westernunion.com" target="_blank" class="text-blue-500 font-bold underline hover:text-blue-400 transition-colors">www.westernunion.com</a></span></p>
-                            <p class="pl-5 text-[10px] text-gray-500 italic">Napraviš nalog za manje od minut – izaberi iznos, primaoca i pošalji transakciju.</p>
-                            
-                            <p class="flex gap-2"><span class="text-gold font-bold">2.</span> <span>Primaoc: <span class="text-white font-bold">Nikola Spiridonović, Beograd, Srbija</span></span></p>
-                            <p class="flex gap-2"><span class="text-gold font-bold">3.</span> <span>Svrha uplate: <span class="text-white font-bold">Online Kurs</span></span></p>
-                            
-                            <p class="flex gap-2"><span class="text-gold font-bold">4.</span> <span>Nakon uplate dobijaš broj transakcije (MTCN)</span></p>
-                            <p class="flex gap-2"><span class="text-gold font-bold">5.</span> <span>Unesi svoj email + MTCN u formu ispod:</span></p>
-                        </div>
-
-                        <!-- FORMSPREE INTEGRACIJA -->
-                        <form action="https://formspree.io/f/xovpobqd" method="POST" class="space-y-4">
-                            <div>
-                                <label class="block text-[10px] uppercase text-gray-500 mb-1 tracking-wider">Tvoj Email</label>
-                                <input type="email" name="email" required class="w-full bg-gray-900 border border-gray-700 text-white p-3 text-sm focus:border-gold outline-none transition-colors">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] uppercase text-gray-500 mb-1 tracking-wider">Broj transakcije (MTCN)</label>
-                                <input type="text" name="mtcn" required class="w-full bg-gray-900 border border-gray-700 text-white p-3 text-sm focus:border-gold outline-none transition-colors">
-                            </div>
-                            
-                            <button type="submit" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold uppercase py-3 tracking-widest transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] mt-2">
-                                Završi Protokol <i class="fas fa-arrow-right ml-2"></i>
-                            </button>
-                        </form>
-
-                        <p class="mt-4 text-center text-gray-500 text-[9px] uppercase tracking-widest opacity-70">
-                            “Ceo Sistem ‘Crna Kutija’ stiže u roku od 24h od potvrde uplate.”
-                        </p>
+                        <i class="fas fa-expand text-5xl text-white/5"></i>
                     </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="story-text">
+                            <p>
+                                Znaš onaj osećaj kada te neko napadne pitanjem, a ti se smanjiš i počneš da se pravdaš? 
+                                "Zašto kasniš?", "Zašto je ovo ovako skupo?". Tvoj stomak se stegne. Počinješ da objašnjavaš.
+                            </p>
+                            <p>
+                                <span class="text-red-500 font-bold">To je trenutak kada si izgubio.</span>
+                                Prihvatio si njihovu realnost gde su oni Sudija, a ti Krivac. To rade samo poslušnici. 
+                            </p>
+                            <p>
+                                <span class="nlp-bold">Prekini to odmah.</span> Čovek od stava nikada ne prihvata okvir optužbe. On ga lomi i postavlja novi.
+                            </p>
+                        </div>
+                        
+                        <!-- INFOGRAPHIC HUD -->
+                        <div class="tactical-hud">
+                            <div class="hud-grid"></div>
+                            <div class="hud-corner tl"></div><div class="hud-corner tr"></div><div class="hud-corner bl"></div><div class="hud-corner br"></div>
+                            
+                            <div class="hud-header">
+                                <span class="hud-title">TAKTIČKI MODUL: RE-FRAMING</span>
+                                <i class="fas fa-crosshairs text-gold animate-pulse"></i>
+                            </div>
+                            
+                            <div class="space-y-4 text-sm relative z-10">
+                                <div class="bg-black/80 p-4 border-l-2 border-red-500">
+                                    <div class="text-[9px] text-red-500 uppercase font-bold mb-1 tracking-widest">NAPAD (NJIHOV OKVIR)</div>
+                                    <div class="text-gray-400 italic">"Zašto je tvoja usluga ovoliko skupa?"</div>
+                                </div>
+                                
+                                <div class="flex justify-center"><i class="fas fa-arrow-down text-gold"></i></div>
+                                
+                                <div class="bg-black/80 p-4 border-l-2 border-gold shadow-[0_0_20px_rgba(197,160,89,0.1)]">
+                                    <div class="text-[9px] text-gold uppercase font-bold mb-1 tracking-widest">KONTROLA (TVOJ OKVIR)</div>
+                                    <div class="text-white font-bold">"Zašto ti je cena jedini faktor kada biraš kvalitet?"</div>
+                                </div>
+                            </div>
+
+                            <button class="btn-mission" onclick="completeLesson(0, this)">
+                                PREUZIMAM REALNOST <i class="fas fa-power-off"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- LEKCIJA 2: MIKRO-SANKCIJA (Judge) -->
+        <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2574&auto=format&fit=crop');">
+            <div class="lesson-overlay"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <article class="luxury-card p-8 md:p-12 reveal">
+                    <!-- LOCK -->
+                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-4xl mb-4"></i><p class="text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
+
+                    <div class="flex justify-between items-start mb-8 border-b border-white/10 pb-6">
+                        <div>
+                            <span class="text-gold font-bold tracking-widest text-xs uppercase mb-2 block">FAZA I: USPOSTAVLJANJE</span>
+                            <h2 class="text-4xl md:text-5xl text-white font-heading uppercase">Mikro-Sankcija</h2>
+                        </div>
+                        <i class="fas fa-gavel text-5xl text-white/5"></i>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="story-text">
+                            <p>
+                                Koliko puta si se nasmejao na glupu šalu samo da ne bi bilo neprijatno? Koliko puta si prećutao nepoštovanje da bi bio "fin"?
+                                Svaki taj lažni osmeh ti je oduzeo deo kičme i deo statusa.
+                            </p>
+                            <p>
+                                Ljudi te ne poštuju jer vide da trpiš sve. Pravi autoritet ne mora da viče. On kažnjava pogledom.
+                            </p>
+                            <p>
+                                <span class="nlp-bold">Nauči da budeš neprijatan.</span> Kada neko pređe granicu, kazni ih tišinom. Gledaj ih kao da su promašili ceo život. Neka se znoje u tvojoj tišini.
+                            </p>
+                        </div>
+                        
+                        <!-- INFOGRAPHIC HUD -->
+                        <div class="tactical-hud">
+                            <div class="hud-grid"></div>
+                            <div class="hud-corner tl"></div><div class="hud-corner tr"></div><div class="hud-corner bl"></div><div class="hud-corner br"></div>
+                            
+                            <div class="hud-header">
+                                <span class="hud-title">ALGORITAM POGLEDA</span>
+                                <i class="fas fa-eye text-gold"></i>
+                            </div>
+                            
+                            <ul class="space-y-3 text-sm text-gray-300 relative z-10">
+                                <li class="flex items-center gap-3 bg-black/60 p-3 border border-white/5">
+                                    <span class="text-gold font-bold font-mono">01.</span>
+                                    <span>Gledaj u oči 3 sekunde (Bez emocije).</span>
+                                </li>
+                                <li class="flex items-center gap-3 bg-black/60 p-3 border border-white/5">
+                                    <span class="text-gold font-bold font-mono">02.</span>
+                                    <span>Polako skreni pogled (Gubitak interesa).</span>
+                                </li>
+                                <li class="flex items-center gap-3 bg-black/60 p-3 border border-white/5">
+                                    <span class="text-gold font-bold font-mono">03.</span>
+                                    <span>Nastavi bez komentara.</span>
+                                </li>
+                            </ul>
+
+                            <button class="btn-mission" onclick="completeLesson(1, this)">
+                                POSTAJEM FILTER <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- === FAZA 2: HIPNOZA === -->
+
+        <!-- LEKCIJA 3: DOUBLE BIND -->
+        <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=2670&auto=format&fit=crop');">
+            <div class="lesson-overlay"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <article class="luxury-card p-8 md:p-12 reveal">
+                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-4xl mb-4"></i><p class="text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
+
+                    <div class="flex justify-between items-start mb-8 border-b border-white/10 pb-6">
+                        <div>
+                            <span class="text-gold font-bold tracking-widest text-xs uppercase mb-2 block">FAZA II: INCEPCIJA</span>
+                            <h2 class="text-4xl md:text-5xl text-white font-heading uppercase">Iluzija Izbora</h2>
+                        </div>
+                        <i class="fas fa-code-branch text-5xl text-white/5"></i>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="story-text">
+                            <p>
+                                Mrziš onaj osećaj kad nekoga pitaš nešto, a plašiš se da će reći "Ne"? "Hoćemo li da se vidimo?", "Možeš li da uradiš ovo?".
+                                Taj strah od odbijanja te čini slabim.
+                            </p>
+                            <p>
+                                <span class="nlp-bold">Nikada više ne daj opciju "Ne".</span>
+                                Koristi "Dvostruki Čvor". Ponudi dva izbora, a oba vode tamo gde ti želiš.
+                                Ljudski mozak se fokusira na *odabir* (Utorak ili Četvrtak?) i zaboravlja da odbije samu ideju.
+                            </p>
+                            <p class="border-l-4 border-gold pl-4 text-white font-bold">
+                                "Ne pitaj da li ćemo potpisati. Pitaj KAKO."
+                            </p>
+                        </div>
+                        
+                        <!-- INFOGRAPHIC HUD -->
+                        <div class="tactical-hud">
+                            <div class="hud-grid"></div>
+                            <div class="hud-corner tl"></div><div class="hud-corner tr"></div><div class="hud-corner bl"></div><div class="hud-corner br"></div>
+                            
+                            <div class="hud-header">
+                                <span class="hud-title">BARŠUNASTA ZAMKA</span>
+                                <i class="fas fa-project-diagram text-gold"></i>
+                            </div>
+                            
+                            <div class="flex gap-4 text-center mt-2 relative z-10">
+                                <div class="flex-1 bg-black/60 p-4 opacity-50 border border-red-900">
+                                    <div class="text-[9px] text-red-500 line-through mb-1 tracking-widest">RIZIČNO</div>
+                                    <div class="text-xs text-gray-400">"Hoćeš da se vidimo?"</div>
+                                    <div class="text-[8px] text-red-800 mt-2">Moguće "NE"</div>
+                                </div>
+                                <div class="flex-1 bg-gold/10 p-4 border border-gold shadow-[0_0_20px_rgba(197,160,89,0.2)]">
+                                    <div class="text-[9px] text-gold font-bold mb-1 tracking-widest">KONTROLA</div>
+                                    <div class="text-xs text-white">"Utorak ili četvrtak?"</div>
+                                    <div class="text-[8px] text-gold mt-2">Oba su "DA"</div>
+                                </div>
+                            </div>
+
+                            <button class="btn-mission" onclick="completeLesson(2, this)">
+                                POSTAVLJAM ZAMKU <i class="fas fa-check-double"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- LEKCIJA 4: SIDRENJE IDENTITETA -->
+        <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2670&auto=format&fit=crop');">
+            <div class="lesson-overlay"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <article class="luxury-card p-8 md:p-12 reveal">
+                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-4xl mb-4"></i><p class="text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
+
+                    <div class="flex justify-between items-start mb-8 border-b border-white/10 pb-6">
+                        <div>
+                            <span class="text-gold font-bold tracking-widest text-xs uppercase mb-2 block">FAZA II: INCEPCIJA</span>
+                            <h2 class="text-4xl md:text-5xl text-white font-heading uppercase">Sidrenje Ega</h2>
+                        </div>
+                        <i class="fas fa-anchor text-5xl text-white/5"></i>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="story-text">
+                            <p>
+                                Najgori osećaj je kad moraš nekoga da moliš za uslugu. Osećaš se malo, zavisno. Kao teret.
+                                Prestani da moliš. Počni da programiraš.
+                            </p>
+                            <p>
+                                Najjača ljudska potreba je da ostanu dosledni slici koju imaju o sebi.
+                                Ako kažeš <em>"Budi darežljiv"</em>, stvaraš otpor.
+                                Ako kažeš <em>"Znam da si ti osoba koja ceni kvalitet i ne gleda na sitnice..."</em>, <span class="nlp-bold">vezao si ih za Ego.</span>
+                                Sada MORAJU da urade to što želiš, samo da bi dokazali da si u pravu.
+                            </p>
+                        </div>
+                        
+                        <!-- INFOGRAPHIC HUD -->
+                        <div class="tactical-hud">
+                            <div class="hud-grid"></div>
+                            <div class="hud-corner tl"></div><div class="hud-corner tr"></div><div class="hud-corner bl"></div><div class="hud-corner br"></div>
+                            
+                            <div class="hud-header">
+                                <span class="hud-title">INCEPCIJA IDENTITETA</span>
+                                <i class="fas fa-fingerprint text-gold"></i>
+                            </div>
+                            
+                            <div class="bg-black/60 p-6 border border-gold/30 italic text-gold text-sm text-center relative z-10">
+                                <i class="fas fa-quote-left text-white/20 absolute top-2 left-2"></i>
+                                "Ti si čovek od reči, znam da kod tebe nema vrdanja, zato očekujem da ovo rešimo brzo..."
+                                <i class="fas fa-quote-right text-white/20 absolute bottom-2 right-2"></i>
+                            </div>
+                            <div class="text-center mt-3 text-[9px] text-gray-500 uppercase tracking-widest">Rezultat: Obaveza prema samom sebi</div>
+
+                            <button class="btn-mission" onclick="completeLesson(3, this)">
+                                VEZUJEM IH ZA EGO <i class="fas fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- === FAZA 3: ODBRANA === -->
+
+        <!-- LEKCIJA 5: SIVA STENA -->
+        <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1485965120184-e224f7a1592e?q=80&w=2669&auto=format&fit=crop');">
+            <div class="lesson-overlay"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <article class="luxury-card p-8 md:p-12 reveal">
+                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-4xl mb-4"></i><p class="text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
+
+                    <div class="flex justify-between items-start mb-8 border-b border-white/10 pb-6">
+                        <div>
+                            <span class="text-gold font-bold tracking-widest text-xs uppercase mb-2 block">FAZA III: NEPROBOJNOST</span>
+                            <h2 class="text-4xl md:text-5xl text-white font-heading uppercase">Siva Stena</h2>
+                        </div>
+                        <i class="fas fa-cube text-5xl text-white/5"></i>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="story-text">
+                            <p>
+                                Iscrpljen si od drama? Od ljudi koji ti sisaju energiju, koji te provociraju, koji traže tvoju reakciju?
+                                Oni se hrane tvojim emocijama. Bilo da se braniš ili napadaš – daješ im hranu.
+                            </p>
+                            <p>
+                                Jedini način da pobediš manipulatora je da postaneš <strong>Siva Stena</strong>.
+                                Dosadno. Monotono. Beživotno.
+                                <span class="nlp-bold">Postani Energetski Vakuum.</span> Budi toliko dosadan i nereaktivan da odu da traže drugu žrtvu.
+                            </p>
+                        </div>
+                        
+                        <!-- INFOGRAPHIC HUD -->
+                        <div class="tactical-hud">
+                            <div class="hud-grid"></div>
+                            <div class="hud-corner tl"></div><div class="hud-corner tr"></div><div class="hud-corner bl"></div><div class="hud-corner br"></div>
+                            
+                            <div class="hud-header">
+                                <span class="hud-title">ENERGETSKI VAKUUM</span>
+                                <i class="fas fa-shield-alt text-gold"></i>
+                            </div>
+                            
+                            <div class="space-y-3 text-sm relative z-10">
+                                <div class="flex justify-between border-b border-white/5 pb-3">
+                                    <span class="text-red-500 font-bold">"Nemoguć si i arogantan!"</span>
+                                    <span class="text-[9px] text-gray-600 uppercase tracking-widest">[NAPAD]</span>
+                                </div>
+                                <div class="flex justify-between pt-1">
+                                    <span class="text-white">"Moguće je da tako deluje ponekad."</span>
+                                    <span class="text-[9px] text-gold uppercase tracking-widest">[STENA]</span>
+                                </div>
+                            </div>
+
+                            <button class="btn-mission" onclick="completeLesson(4, this)">
+                                POSTAJEM NEDODIRLJIV <i class="fas fa-ban"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- LEKCIJA 6: SKALPEL -->
+        <section class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop');">
+            <div class="lesson-overlay"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <article class="luxury-card p-8 md:p-12 reveal">
+                    <div class="locked-overlay"><i class="fas fa-lock text-gold text-4xl mb-4"></i><p class="text-xs uppercase tracking-widest text-gray-400">Pristup Zabranjen</p></div>
+
+                    <div class="flex justify-between items-start mb-8 border-b border-white/10 pb-6">
+                        <div>
+                            <span class="text-gold font-bold tracking-widest text-xs uppercase mb-2 block">FAZA III: NEPROBOJNOST</span>
+                            <h2 class="text-4xl md:text-5xl text-white font-heading uppercase">Skalpel (Meta-Seciranje)</h2>
+                        </div>
+                        <i class="fas fa-microscope text-5xl text-white/5"></i>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="story-text">
+                            <p>
+                                Najgori osećaj je kad znaš da si u pravu, a oni te ubede da si lud (Prave te ludim). Vrtiš se u krug, gubiš tlo pod nogama.
+                                To je zato što se boriš sa SADRŽAJEM njihovih laži.
+                            </p>
+                            <p>
+                                <span class="nlp-bold">Izađi iz okvira i komentariši PROCES.</span>
+                                Umesto da se braniš, reci: <em>"Zanimljivo je kako podižeš glas svaki put kad ostaneš bez argumenata."</em>
+                                Seciraj njihovu igru pred njima. To je trenutni kraj za manipulatora jer si upalio svetlo.
+                            </p>
+                        </div>
+                        
+                        <!-- INFOGRAPHIC HUD -->
+                        <div class="tactical-hud">
+                            <div class="hud-grid"></div>
+                            <div class="hud-corner tl"></div><div class="hud-corner tr"></div><div class="hud-corner bl"></div><div class="hud-corner br"></div>
+                            
+                            <div class="hud-header">
+                                <span class="hud-title">ANALIZA PROCESA</span>
+                                <i class="fas fa-search text-gold"></i>
+                            </div>
+                            
+                            <div class="bg-black/60 p-4 border border-white/10 text-gray-300 text-sm italic relative z-10">
+                                <i class="fas fa-bolt text-gold mr-2"></i>
+                                "Zanimljivo je kako se ovde pokušava izazvati krivica umesto da se rešava problem."
+                            </div>
+
+                            <button class="btn-mission" onclick="completeLesson(5, this)">
+                                RAZBIJAM ILUZIJU <i class="fas fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- === FINAL CTA: THE BLACK BOX === -->
+        <section id="finalOffer" class="lesson-container" style="background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2670&auto=format&fit=crop');">
+            <div class="lesson-overlay"></div>
+            <div class="container mx-auto px-4 md:px-6 max-w-4xl relative z-10">
+                <article class="luxury-card p-1 reveal border-gold shadow-[0_0_150px_rgba(197,160,89,0.15)]">
+                    
+                    <!-- FINAL LOCK -->
+                    <div class="locked-overlay" id="finalLock">
+                        <i class="fas fa-fingerprint text-gold text-6xl mb-6"></i>
+                        <h3 class="text-white font-heading uppercase text-3xl mb-2 tracking-widest">Finalna Arhitektura</h3>
+                        <p class="text-gray-500 text-sm font-mono uppercase">Završite svih 6 faza za pristup</p>
+                    </div>
+
+                    <div class="bg-black/95 p-8 md:p-12 text-center md:text-left">
+                        <div class="flex flex-col md:flex-row justify-between items-start mb-10 border-b border-white/10 pb-8">
+                            <div>
+                                <span class="text-red-500 font-bold tracking-[0.3em] text-[10px] mb-3 block animate-pulse">TAJNI KANAL OTVOREN</span>
+                                <h2 class="text-5xl md:text-7xl text-white font-heading uppercase leading-none">Arhitektura <br><span class="text-gold">Senke</span></h2>
+                            </div>
+                            <div class="mt-6 md:mt-0 text-right hidden md:block">
+                                <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Validnost Ponude</div>
+                                <div class="text-gold font-mono text-3xl font-bold" id="finalTimerDisplay">24:00:00</div>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-400 text-base mb-12 leading-relaxed max-w-2xl">
+                            Osećaš težinu ovog znanja? Ovo što je upravo naučeno je samo demo verzija. 
+                            Prava "Crna Kutija" nije kurs. To je oružje. 
+                            <br><br>
+                            Sadrži kompletne psihološke skripte, algoritme za čitanje ljudi i taktike koje su previše opasne za javno deljenje.
+                            Danas donosiš odluku: Da li se vraćaš u stari život gde si figura, ili <span class="nlp-bold">uzimaš ono što ti pripada</span>?
+                        </p>
+
+                        <!-- VALUE STACK -->
+                        <div class="tactical-hud mb-10">
+                            <div class="hud-grid"></div>
+                            <div class="hud-corner tl"></div><div class="hud-corner tr"></div><div class="hud-corner bl"></div><div class="hud-corner br"></div>
+                            
+                            <h3 class="text-white font-heading uppercase text-sm tracking-widest mb-6 border-b border-white/10 pb-2">Inventar Crne Kutije:</h3>
+                            <div class="space-y-5 relative z-10">
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-gray-300 flex items-center font-bold"><i class="fas fa-crown text-gold w-8 text-lg"></i> Modul 1: Totalni Autoritet</span>
+                                    <span class="text-gray-600 line-through font-mono">30 €</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-gray-300 flex items-center font-bold"><i class="fas fa-comments text-gold w-8 text-lg"></i> Modul 2: Crna Hipnoza</span>
+                                    <span class="text-gray-600 line-through font-mono">20 €</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-gray-300 flex items-center font-bold"><i class="fas fa-eye text-gold w-8 text-lg"></i> Modul 3: Mentalni Rendgen (Dekodiranje Namere)</span>
+                                    <span class="text-gray-600 line-through font-mono">15 €</span>
+                                </div>
+                                <div class="border-t border-white/10 pt-4 mt-4 flex justify-between items-end">
+                                    <div class="text-[10px] text-gray-500 uppercase tracking-widest">Ukupna Vrednost</div>
+                                    <div class="text-gray-400 font-mono text-lg">65 €</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PRICING & ACTION -->
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                            <div class="text-center md:text-left">
+                                <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Standard: <span class="line-through">50 €</span></div>
+                                <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Do 1. Jan: <span class="line-through text-white">44 €</span></div>
+                                <div class="text-gold font-heading text-7xl font-bold drop-shadow-[0_0_25px_rgba(197,160,89,0.4)]">37 €</div>
+                                <div class="text-red-500 text-[10px] uppercase font-bold animate-pulse mt-2 tracking-widest">Samo narednih 24h</div>
+                            </div>
+                            
+                            <button onclick="openPaymentModal()" class="w-full md:w-auto flex-1 btn-gold text-xl">
+                                PREUZMI INVENTAR ODMAH
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- PAYMENT MODAL -->
+        <div id="paymentModal" class="fixed inset-0 z-[100] hidden">
+            <div class="absolute inset-0 bg-black/98 backdrop-blur-xl" onclick="closePaymentModal()"></div>
+            
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6">
+                <div class="bg-[#0f0f0f] border border-gold/30 p-10 rounded-sm shadow-[0_0_100px_rgba(197,160,89,0.2)] relative">
+                    <button onclick="closePaymentModal()" class="absolute top-4 right-4 text-gray-600 hover:text-white"><i class="fas fa-times"></i></button>
+                    
+                    <div class="text-center mb-8">
+                        <i class="fas fa-user-secret text-5xl text-gold mb-4 opacity-80"></i>
+                        <h3 class="text-white font-heading text-2xl uppercase tracking-widest">Anonimni Kanal</h3>
+                        <p class="text-gray-500 text-xs mt-2 font-mono">ENCRYPTED TRANSACTION: NO DIGITAL TRACE</p>
+                    </div>
+
+                    <div class="space-y-6 mb-8">
+                        <div class="bg-black p-5 border-l-2 border-gold flex flex-col gap-4">
+                            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                                <div>
+                                    <p class="text-[10px] text-gray-400 uppercase tracking-widest">Metod:</p>
+                                    <a href="https://www.westernunion.com/rs/sr/home.html" target="_blank" class="text-gold font-bold tracking-wider underline hover:text-white text-sm">WESTERN UNION SRBIJA <i class="fas fa-external-link-alt ml-1"></i></a>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-[10px] text-gray-400 uppercase tracking-widest">Iznos:</p>
+                                    <p class="text-gold font-bold text-xl">37 EUR</p>
+                                </div>
+                            </div>
+                            <p class="text-[10px] text-gray-500 italic">
+                                Klikni na link iznad za online slanje ili poseti najbližu poštu/menjačnicu.
+                            </p>
+                        </div>
+                        
+                        <div class="text-sm text-gray-400 space-y-3 pl-4 border-l border-white/10 font-mono">
+                            <p>1. Primalac: <strong class="text-white">Nikola Spiridonović</strong></p>
+                            <p>2. Lokacija: <strong class="text-white">Beograd, Srbija</strong></p>
+                            <p>3. Svrha: <strong class="text-gray-500">Donacija / Pomoć</strong></p>
+                        </div>
+                    </div>
+
+                    <form action="https://formspree.io/f/xovpobqd" method="POST" class="space-y-5">
+                        <input type="hidden" name="subject" value="NOVA UPLATA - CRNA KUTIJA">
+                        <div>
+                            <label class="block text-[10px] uppercase text-gold mb-2 tracking-widest font-bold">Verifikacioni Kod (MTCN)</label>
+                            <input type="text" name="mtcn" required placeholder="Unesi 10 cifara..." class="w-full bg-black border border-gray-800 text-white p-4 text-sm focus:border-gold outline-none transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase text-gold mb-2 tracking-widest font-bold">Email za Prijem Materijala</label>
+                            <input type="email" name="email" required placeholder="tvoj@email.com" class="w-full bg-black border border-gray-800 text-white p-4 text-sm focus:border-gold outline-none transition-colors">
+                        </div>
+                        <button type="submit" class="w-full bg-green-800 hover:bg-green-700 text-white font-bold uppercase py-4 tracking-widest transition-all shadow-[0_0_30px_rgba(34,197,94,0.2)] mt-2">
+                            POTVRDI I PREUZMI <i class="fas fa-download ml-2"></i>
+                        </button>
+                    </form>
+                    
+                    <p class="text-center text-[9px] text-gray-600 mt-6 uppercase tracking-widest">
+                        Pristup se odobrava manuelno nakon provere (Max 12h).
+                    </p>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-black py-12 border-t border-white/5 relative z-10">
-        <div class="container mx-auto px-6 text-center flex flex-col items-center">
-            <h2 class="font-brand text-2xl text-white tracking-widest mb-2">ASCENDRIX</h2>
-            <div class="text-gray-600 text-[10px] uppercase tracking-widest mt-4 opacity-50">
-                Interna Upotreba Samo. Poverljivo.
-            </div>
-        </div>
-    </footer>
-
     <!-- SKRIPTE -->
     <script>
-        // Reveal animacija na skrol
+        // --- 0. BROWSER HINT LOGIC ---
+        window.closeBrowserHint = function() {
+            const hint = document.getElementById('browserHint');
+            if (hint) {
+                hint.style.transition = "opacity 0.5s ease"; // Ensure transition exists
+                hint.style.opacity = '0';
+                setTimeout(() => {
+                    hint.remove(); 
+                    document.body.classList.remove('overflow-hidden');
+                }, 500);
+            }
+        };
+
+        // --- 1. START PROTOCOL (REVEAL MAIN) ---
+        window.startProtocol = function() {
+            const main = document.getElementById('mainContent');
+            main.classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('lekcija1').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        };
+
+        // --- 2. REVEAL ANIMATIONS ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1090,182 +841,98 @@
                 }
             });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // LOGIKA KVIZA
-        function checkAnswer(element, isCorrect, explanation) {
-            const questionContainer = element.parentElement.parentElement;
+        // --- 3. LOCK SYSTEM & PROGRESS ---
+        window.completeLesson = function(lessonIndex, btn) {
+            // Visual Change
+            btn.classList.add('completed');
+            btn.innerHTML = 'PROTOKOL INTEGRISAN <i class="fas fa-check ml-2"></i>';
+            btn.style.borderColor = '#22c55e';
+            btn.style.color = '#22c55e';
+            btn.style.background = 'rgba(34, 197, 94, 0.05)';
+
+            const lessons = document.querySelectorAll('.lesson-container');
+            const nextIndex = lessonIndex + 1;
             
-            // Disable clicks
-            const options = questionContainer.querySelectorAll('.quiz-option');
-            options.forEach(opt => opt.style.pointerEvents = 'none');
+            // Update Navbar
+            document.querySelector('nav span.text-gold').innerText = `Level: ${nextIndex + 1}/6`;
 
-            // Feedback
-            const feedbackDiv = questionContainer.querySelector('.feedback');
-            feedbackDiv.classList.remove('hidden');
-            feedbackDiv.textContent = explanation;
-
-            if (isCorrect) {
-                element.classList.add('correct');
-                feedbackDiv.classList.add('text-green-400');
-                element.innerHTML += ' <i class="fas fa-check ml-2"></i>';
-            } else {
-                element.classList.add('wrong');
-                feedbackDiv.classList.add('text-red-400');
-                element.innerHTML += ' <i class="fas fa-times ml-2"></i>';
-            }
-        }
-
-        // --- CENA I TAJMER LOGIKA (KOMPLEKSNA) ---
-        
-        // Konstante
-        const PRICE_FULL = 50;
-        const PRICE_PROMO = 44;
-        const PRICE_FLASH = 37;
-        
-        // 1. Decembar
-        const deadlinePromo = new Date('2025-12-01T23:59:59').getTime(); 
-        
-        // Flash tajmer (25 minuta) - čuvamo u localStorage da ne resetuje na refresh
-        let flashEndTime = localStorage.getItem('ascendrixFlashEnd_v5'); // Changed key to reset for new duration
-        if (!flashEndTime) {
-            flashEndTime = new Date().getTime() + (25 * 60 * 1000); // 25 minuta
-            localStorage.setItem('ascendrixFlashEnd_v5', flashEndTime);
-        }
-
-        function updatePricing() {
-            const now = new Date().getTime();
-            const container = document.getElementById('modalPriceContainer');
-            if(!container) return;
-
-            // Logika prioriteta: Flash > Promo > Full
-            
-            // 1. Provera Flash Tajmera (25 min)
-            if (now < flashEndTime) {
-                const distance = flashEndTime - now;
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                container.innerHTML = `
-                    <div class="text-[10px] text-red-500 font-bold uppercase tracking-widest animate-pulse mb-2">Flash Ponuda ističe za: ${minutes}m ${seconds}s</div>
-                    <div class="flex items-center justify-center gap-4">
-                         <div class="flex flex-col">
-                            <span class="text-gray-500 line-through text-xs">Standard: ${PRICE_FULL} €</span>
-                            <span class="text-gray-400 line-through text-xs">Promo: ${PRICE_PROMO} €</span>
-                         </div>
-                         <span class="text-5xl text-gold font-heading font-bold drop-shadow-[0_0_10px_rgba(197,160,89,0.5)]">${PRICE_FLASH} €</span>
-                    </div>
-                `;
+            // Check Final Unlock
+            if (nextIndex === 6) { 
+                const finalLock = document.getElementById('finalLock');
+                if(finalLock) {
+                    finalLock.classList.add('unlocked');
+                    setTimeout(() => {
+                        document.getElementById('finalOffer').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        startFlashTimer(); 
+                    }, 600);
+                }
                 return;
             }
 
-            // 2. Provera Promo Tajmera (1. Decembar)
-            if (now < deadlinePromo) {
-                container.innerHTML = `
-                    <div class="text-[10px] text-gold font-bold uppercase tracking-widest mb-2">Promocija do 1. Decembra</div>
-                    <div class="flex items-center justify-center gap-4">
-                         <span class="text-gray-500 line-through text-sm">${PRICE_FULL} €</span>
-                         <span class="text-4xl text-white font-heading font-bold">${PRICE_PROMO} €</span>
-                    </div>
-                `;
-                return;
-            }
-
-            // 3. Standardna cena
-            container.innerHTML = `
-                <div class="text-[10px] text-gray-500 uppercase tracking-widest mb-2">Standardna Cena</div>
-                <div class="text-4xl text-white font-heading font-bold">${PRICE_FULL} €</div>
-            `;
-        }
-
-        // Modal Logic
-        function openModal() {
-            document.getElementById('paymentModal').classList.remove('hidden');
-            updatePricing(); 
-        }
-
-        function closeModal() {
-            document.getElementById('paymentModal').classList.add('hidden');
-        }
-
-        setInterval(updatePricing, 1000);
-        updatePricing();
-
-        // --- SISTEM ZAKLJUČAVANJA LEKCIJA ---
-        // Dodajemo overlay i dugmiće na postojeće lekcije bez menjanja njihovog HTML koda
-        document.addEventListener('DOMContentLoaded', () => {
-            const lessons = document.querySelectorAll('.lesson-container');
-            
-            lessons.forEach((lesson, index) => {
-                const luxuryCard = lesson.querySelector('.luxury-card');
-                
-                // 1. Dodaj LOCK OVERLAY za sve lekcije osim prve
-                if (index > 0) {
-                    const lockOverlay = document.createElement('div');
-                    lockOverlay.className = 'locked-overlay';
-                    lockOverlay.innerHTML = `
-                        <div class="lock-icon-container">
-                            <i class="fas fa-lock text-gold text-3xl"></i>
-                        </div>
-                        <h3 class="text-white font-heading uppercase text-xl mb-2 tracking-widest">Lekcija Zaključana</h3>
-                        <p class="text-gray-500 text-xs font-mono uppercase">Završite prethodni protokol</p>
-                    `;
-                    lesson.appendChild(lockOverlay);
-                }
-
-                // 2. Dodaj DUGME "ZAVRŠI LEKCIJU" za sve lekcije
-                // Ovo omogućava korisniku da otključa sledeću
-                if (luxuryCard) {
-                    const btnWrapper = document.createElement('div');
-                    btnWrapper.className = 'completion-btn-wrapper';
-                    
-                    const isLast = index === lessons.length - 1;
-                    // Za poslednju lekciju (7) nema sledeće, ali dugme može da stoji kao finalizacija
-                    const btnText = isLast ? "Završi Protokol" : "Označi kao završeno i nastavi";
-                    
-                    btnWrapper.innerHTML = `
-                        <button class="btn-complete" onclick="completeLesson(${index}, this)">
-                            ${btnText} <i class="fas fa-arrow-right ml-2"></i>
-                        </button>
-                    `;
-                    luxuryCard.appendChild(btnWrapper);
-                }
-            });
-        });
-
-        // Globalna funkcija za otključavanje
-        window.completeLesson = function(currentIndex, btnElement) {
-            // Vizuelna promena dugmeta
-            btnElement.classList.add('finished');
-            btnElement.innerHTML = 'PROTOKOL USVOJEN <i class="fas fa-check ml-2"></i>';
-            
-            // Pronađi sledeću lekciju
-            const lessons = document.querySelectorAll('.lesson-container');
-            const nextIndex = currentIndex + 1;
-
+            // Normal Unlock
             if (nextIndex < lessons.length) {
                 const nextLesson = lessons[nextIndex];
-                const lockOverlay = nextLesson.querySelector('.locked-overlay');
-                
-                if (lockOverlay) {
-                    // Otključaj
-                    lockOverlay.classList.add('unlocked');
-                    
-                    // Skroluj do sledeće lekcije nakon kratke pauze
+                const overlay = nextLesson.querySelector('.locked-overlay');
+                if (overlay) {
+                    overlay.classList.add('unlocked');
                     setTimeout(() => {
                         nextLesson.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 500);
-                }
-            } else {
-                // Ako je ovo Lekcija 7 i kliknuto je dugme
-                // Možemo otvoriti modal kao finalni korak
-                if(currentIndex === lessons.length - 1) {
-                    openModal();
+                    }, 600);
                 }
             }
         };
+
+        // --- 4. TIMER LOGIC ---
+        function startFlashTimer() {
+            const STORAGE_KEY = 'ascendrix_titan_timer';
+            let endTime = localStorage.getItem(STORAGE_KEY);
+            
+            if (!endTime) {
+                const now = new Date().getTime();
+                endTime = now + (24 * 60 * 60 * 1000); 
+                localStorage.setItem(STORAGE_KEY, endTime);
+            }
+
+            document.getElementById('navTimerBox').classList.remove('opacity-0');
+            const timerDisplay = document.getElementById('finalTimerDisplay');
+            const headerTimer = document.getElementById('headerTimer');
+
+            function update() {
+                const now = new Date().getTime();
+                const distance = endTime - now;
+
+                if (distance < 0) {
+                    const expired = "00:00:00";
+                    if(timerDisplay) timerDisplay.innerHTML = expired;
+                    if(headerTimer) headerTimer.innerHTML = expired;
+                    return;
+                }
+
+                const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((distance % (1000 * 60)) / 1000);
+                const timeString = `${h < 10 ? '0'+h : h}:${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+                
+                if(timerDisplay) timerDisplay.innerHTML = timeString;
+                if(headerTimer) headerTimer.innerHTML = timeString;
+            }
+            setInterval(update, 1000);
+            update();
+        }
+        
+        if(localStorage.getItem('ascendrix_titan_timer')) {
+            startFlashTimer();
+        }
+
+        // --- 5. MODAL LOGIC ---
+        window.openPaymentModal = function() {
+            document.getElementById('paymentModal').classList.remove('hidden');
+        }
+        window.closePaymentModal = function() {
+            document.getElementById('paymentModal').classList.add('hidden');
+        }
     </script>
 </body>
 </html>
-
